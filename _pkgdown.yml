@@ -1,0 +1,38 @@
+template:
+  params:
+    bootswatch: readable
+reference:
+
+- title: Overview
+  contents:
+  - penfa-package
+
+- title: Main functions
+  contents:
+  - penfa
+  - penfaOptions
+  - penfaOut
+  - penfaParEstim
+  - penfaPredict
+  - penmat
+
+- title: Classes
+  contents:
+  - penfa-class
+  - penfaData-class
+  - penfaSampleStats-class
+  - penfaModel-class
+  - penfaPenalty-class
+
+- title: Methods
+  contents:
+  - show,penfa-method
+  - summary,penfa-method
+  - coef,penfa-method
+  - fitted,penfa-method
+  - show,penfaData-method
+  - show,penfaPenalty-method
+
+- title: Data
+  contents:
+  - ccdata

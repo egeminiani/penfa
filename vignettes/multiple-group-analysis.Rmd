@@ -1,0 +1,309 @@
+---
+title: "Penalized Multiple-Group Factor Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Penalized Multiple-Group Factor Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{css, echo=FALSE}
+pre {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 600px;
+}
+```
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+options(width = 100)
+library(DT)
+```
+
+## Introduction
+
+**Aim**. This vignette shows how to fit a penalized multiple-group factor
+analysis model with the alasso penalty using the routines in the `penfa`
+package. The penalties will automatically encourage sparsity in the factor
+structures, and invariance in the loadings and intercepts.
+
+**Data**. For illustration purposes, we use the cross-cultural data set `ccdata`
+containing the standardized ratings to 12 items concerning organizational
+citizenship behavior. Employees from different countries were asked to rate
+their attitudes towards helping other employees and giving suggestions for
+improved work conditions. The items are thought to measure two latent factors:
+**help**, defined by the first seven items (`h1` to `h7`), and **voice**,
+represented by the last five items (`v1` to `v5`). See `?ccdata` for details.
+
+This data set is a standardized version of the one in the
+[`ccpsyc`](https://github.com/Jo-Karl/ccpsyc/) package, and only considers
+employees from Lebanon and Taiwan (i.e., `"LEB"`, `"TAIW"`). The country of
+origin is the group variable for the multiple-group analysis. 
+This vignette is meant as a demo of the capabilities of `penfa`; please refer to 
+Fischer et al. (2019) and Fischer and Karl (2019) for a description and
+analysis of these data.
+
+Let us load and inspect `ccdata`.
+
+```{r dataset}
+library(penfa)
+data(ccdata)
+
+summary(ccdata)
+```
+
+## Model specification
+
+The syntax becomes more elaborate than the one in
+`vignette("automatic-tuning-selection")` due to the additional specification of
+the mean structure. Following the rationale in Geminiani et al. (2021), 
+we only specify the minimum number of identification constraints.
+The metric of the factors is accommodated through the 'marker-variable'
+approach, with the markers being `h1` for `help` and `v1` for `voice`: the
+primary loadings of the markers are set to 1, and their intercepts to 0. To
+avoid rotational freedom, the secondary loading of the markers are set to zero.
+Intercepts for multiple variables can be introduced by specifying the variables
+of interest on the left-hand side, followed '+' signs, and on the right-hand
+side the tilde operator `~` and the number 1. By default, factor means are fixed
+to zero. Provided that identification restrictions are applied, users can force
+the estimation of any model parameter through a pre-multiplication by `NA`
+(i.e., `'help  ~ NA*1'` and `'voice ~ NA*1'`). Alternatively, factor means can
+be estimated by setting `int.lv.free = TRUE` in the model function call. If the
+variable appearing in the intercept formulas is observed, then the formula
+specifies the intercept term for that item; if the variable is latent (i.e., a
+factor), then the formula specifies a factor mean. By default, unique variances
+are automatically added to the model, and the factors are allowed to correlate.
+
+```{r syntax_mg}
+syntax.mg = 'help  =∼ 1*h1 +          h2 +          h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+             voice =∼ 0*h1 + start(0)*h2 + start(0)*h3 + h4 + h5 + h6 + h7 + 1*v1 + v2 + v3 + v4 + v5
+            
+             h2 + h3 + h4 + h5 + h6 + h7 + v2 + v3 + v4 + v5 ~ 1 
+             help  ~ NA*1
+             voice ~ NA*1 '
+```
+
+Users can take advantage of the `start()` function to provide informative
+starting values to some model parameters and hence facilitate the estimation
+process. In the syntax above, we specified the starting values for two secondary
+loadings to zero. These specifications can be modified by altering the syntax
+(see `?penfa` for details on how to write the model syntax).
+
+## Model fitting
+
+As discussed in `vignette("automatic-tuning-selection")`, we first fit an
+unpenalized model to obtain the maximum likelihood estimates to be used as
+weights for the alasso. In the `group` argument, we indicate the name of the
+group variable in the data set, which is the `country` of origin of the
+employees. We also set `pen.shrink = "none"`, and `strategy = "fixed"`.
+
+```{r mle.mgfit}
+mle.fitMG <- penfa(## factor model
+                   model = syntax.mg,
+                   data  = ccdata,
+                   group = "country",
+                   ## (no) penalization
+                   pen.shrink = "none",
+                   pen.diff = "none",
+                   eta = list(shrink = c("lambda" = 0), diff = c("none" = 0)),
+                   strategy = "fixed",
+                   verbose = FALSE) 
+```
+
+The estimated parameters can be extracted via the `coef` method. We collect them
+in the `mle.weightsMG` vector, which will be used when fitting the penalized
+multiple-group model with the alasso penalty.
+
+```{r weights.mg}
+mle.weightsMG <- coef(mle.fitMG)
+```
+
+We can now estimate a penalized multiple-group model with the alasso penalty.
+Following the rationale in Geminiani et al. (2021), we specify 
+the following penalties:
+
+* **Penalty 1**: sparsity in the loading matrix of each group
+* **Penalty 2**: cross-group invariance of loadings
+* **Penalty 3**: cross-group invariance of intercepts
+
+This makes up for a total of three tuning parameters, whose optimal values can
+be fast and efficiently estimated through the automatic tuning procedure. The
+argument `pen.shrink` specifies the function for Penalty 1 (shrinkage), whereas
+`pen.diff` the penalty function for Penalties 2 and 3 (shrinkage of pairwise
+group differences). The names `"lambda"` and `"tau"` in the `eta` argument
+clarify that the shrinkage penalty has to be applied on the loadings, and the
+invariance penalty on both loadings and intercepts. The numeric values in `eta`
+constitute the starting values for each tuning value. By default the alasso
+penalty is computed with the exponent equal to 1, and the automatic procedure
+uses an influence factor of 4. Users desiring sparser solutions are encouraged
+to try higher values for these quantities through the corresponding arguments
+(`a.alasso `, `gamma`) in the `penfa` call.
+
+```{r alasso_mg_fit}
+alasso.fitMG <- penfa(## factor model
+                      model = syntax.mg,
+                      data = ccdata,
+                      group = "country",
+                      int.lv.free = TRUE,
+                      ## penalization
+                      pen.shrink = "alasso",
+                      pen.diff = "alasso",
+                      eta = list(shrink = c("lambda" = 0.01),
+                                 diff   = c("lambda" = 0.01, "tau" = 0.01)),
+                      ## automatic procedure
+                      strategy = "auto",
+                      gamma = 4,
+                      ## alasso
+                      weights = mle.weightsMG,
+                      verbose = TRUE)
+```
+
+
+```{r alasso_mg_show}
+alasso.fitMG
+```
+
+
+### Summary
+
+From the `summary` of the fitted object we can notice that the automatic tuning
+procedure required just a couple of iterations to converge. The optimal tuning
+parameters are 0.002 for Penalty 1, 30590.875 for Penalty 2, and 0.008 for
+Penalty 3.
+
+```{r}
+summary(alasso.fitMG)
+```
+
+The estimated parameters can be inspected in matrix-form through the `penfaOut`
+function. The `which` argument allows to extract the elements of interest.
+The resulting loading matrices are sparse and equivalent across groups
+(as demonstrated by the very large value for the second tuning parameter). 
+
+```{r penfaOutMG}
+penfaOut(alasso.fitMG, which = c("lambda", "tau"))
+```
+
+### Effective degrees of freedom
+
+The number of *edf* of this penalized model is 56.77, which is a fractional
+number, and is the sum of the contributions from the *edf* of each model
+parameter. Each **edf** quantifies the impact of the three penalties on each 
+parameter. Parameters unaffected by the penalization have an *edf* equal to 1.
+
+```{r eval=FALSE, include=TRUE}
+alasso.fitMG@Inference$edf.single
+```
+
+```{r echo=FALSE}
+round(alasso.fitMG@Inference$edf.single, 3)
+```
+
+### Implied moments
+
+The group-specific implied moments (the covariance matrix and the mean vector)
+can be found via the `fitted` method.
+
+```{r}
+implied <- fitted(alasso.fitMG)
+implied
+```
+
+### Penalty matrices
+
+The complete penalty matrix is stored in `alasso.fit@Penalize@Sh.info$S.h`, but
+it can be easily extracted via the `penmat` function. This matrix is the sum of
+the penalty matrices for Penalty 1 (`sparsity.penmat`), Penalty 2
+(`loadinvariance.penmat`), and Penalty 3 (`intinvariance.penmat`). Unique
+variances, factor (co)variances and factor means were not affected by the
+penalization, so their entries in the penalty matrices are equal to zero.
+
+Through the `plot` method, we can visualize an interactive heatmap of the log of
+the absolute value of each estimated penalty matrix (because of the wide element
+range). Due to space constraints given by the large number of parameters, some
+parameter labels on the axes may be hidden. In this case, users can zoom in on
+the area of interest and inspect the penalty values for the parameters of
+interest.
+
+```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+full.penmat <- penmat(alasso.fitMG)
+plot(full.penmat)
+```
+
+The above penalty matrix is the sum of the following three individuals penalty
+matrices.
+
+#### Sparsity
+
+This penalty matrix shrinks the small factor loadings of each group to zero.
+Apart from the group loadings, all the remaining entries of the penalty matrix
+are equal to zero.
+
+```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+sparsity.penmat <- penmat(alasso.fitMG, type = "shrink", which = "lambda")
+plot(sparsity.penmat)
+```
+
+#### Loading invariance
+
+This penalty matrix shrinks the pairwise group differences of the factor
+loadings to zero.
+
+```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+loadinvariance.penmat <- penmat(alasso.fitMG, type = "diff", which = "lambda")
+plot(loadinvariance.penmat)
+```
+
+#### Intercept invariance
+
+This penalty matrix shrinks the pairwise group differences of the intercepts to
+zero.
+
+```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+intinvariance.penmat <- penmat(alasso.fitMG, type = "diff", which = "tau")
+plot(intinvariance.penmat)
+```
+
+### Factor scores
+
+Lastly, group-specific factor scores can be calculated via the `penfaPredict`
+function. The argument `assemble = TRUE` allows to assemble the factor scores
+from each group in a single data frame with a group column.
+
+```{r fscores_mg}
+fscoresMG <- penfaPredict(alasso.fitMG, assemble = TRUE)
+```
+
+```{r fscores_datatable, echo=FALSE}
+formatRound(
+  datatable(fscoresMG, 
+            extensions = c('Buttons', 'Scroller', 'RowGroup'),
+            options = list(autoFill = TRUE, 
+                           dom = 'Bfrtip',
+                           buttons = c('csv', 'excel', 'pdf'),
+                           deferRender = TRUE,
+                           scrollY = 200,
+                           scroller = TRUE,
+                           rowGroup = list(dataSrc = 3))),
+  columns = c('help', 'voice'), digits=3)
+```
+
+## References
+
+* Fischer, R., Ferreira, M. C., Van Meurs, N. et al. (2019). "Does
+Organizational Formalization Facilitate Voice and Helping Organizational
+Citizenship Behaviors? It Depends on (National) Uncertainty Norms." Journal of
+International Business Studies, 50(1), 125-134.
+[https://doi.org/10.1057/s41267-017-0132-6](https://doi.org/10.1057/s41267-017-0132-6)
+
+* Fischer, R., & Karl, J. A. (2019). "A Primer to (Cross-Cultural) Multi-Group
+Invariance Testing Possibilities in R." Frontiers in psychology, 10, 1507.
+[https://doi.org/10.3389/fpsyg.2019.01507](https://doi.org/10.3389/fpsyg.2019.01507)
+
+* Geminiani, E., Marra, G., & Moustaki, I. (2021). "Single- and Multiple-Group
+Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated
+Automatic Multiple Tuning Parameter Selection." Psychometrika, 86(1), 65-95. [https://doi.org/10.1007/s11336-021-09751-8](https://doi.org/10.1007/s11336-021-09751-8)

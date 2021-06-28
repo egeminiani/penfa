@@ -1,0 +1,358 @@
+---
+title: "Penalized Factor Analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Penalized Factor Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{css, echo=FALSE}
+pre {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 600px;
+}
+```
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+options(width = 100)
+library(DT)
+```
+
+## Introduction
+
+**Aim**. This vignette shows how to fit a penalized factor analysis model using
+the routines in the `penfa` package. The penalty will automatically introduce
+sparsity in the factor loading matrix.
+
+**Data**. For illustration purposes, we use the cross-cultural data set `ccdata`
+containing the standardized ratings to 12 items concerning organizational
+citizenship behavior. Employees from different countries were asked to rate
+their attitudes towards helping other employees and giving suggestions for
+improved work conditions. The items are thought to measure two latent factors:
+**help**, defined by the first seven items (`h1` to `h7`), and **voice**,
+represented by the last five items (`v1` to `v5`). See `?ccdata` for details.
+
+This data set is a standardized version of the one in the
+[`ccpsyc`](https://github.com/Jo-Karl/ccpsyc/) package, and only considers
+employees from Lebanon and Taiwan (i.e., `"LEB"`, `"TAIW"`). 
+This vignette is meant as a demo of the capabilities of `penfa`; please refer to 
+Fischer et al. (2019) and Fischer and Karl (2019) for a description and
+analysis of these data.
+
+Let us load and inspect `ccdata`.
+
+```{r dataset}
+library(penfa)
+data(ccdata)
+
+summary(ccdata)
+```
+
+## Model specification
+
+Before fitting the model, we need to write a model syntax describing the
+relationships between the items and the latent factors. To facilitate its
+formulation, the rules for the syntax specification broadly follow the ones
+required by [lavaan](https://cran.r-project.org/web/packages/lavaan/). The
+syntax must be enclosed in single quotes `' '`.
+
+```{r syntax}
+syntax = 'help  =∼   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+          voice =∼ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
+```
+
+
+The factors `help` and `voice` appear on the left-hand side, whereas the
+observed variables on the left-hand side. Following the rationale in Geminiani
+et al. (2021), we only specify the minimum number of identification constraints.
+We are setting the scales of the factors by fixing their factor variances to 1.
+This can be done in one of two ways: 1) by adding `'help ~~ 1*help'` and `'voice
+~~ 1*voice'`  to the syntax above; or 2) by setting the argument `std.lv = TRUE`
+in the fitting function (see below). To avoid rotational freedom, we fix one
+loading per factor to zero. Parameters can be easily fixed to user-defined
+values through the pre-multiplication mechanism. By default, unique variances
+are automatically added to the model, and the factors are allowed to correlate.
+These specifications can be modified by altering the syntax (see `?penfa` for
+details on how to write the model syntax).
+
+## Model fitting
+
+The core of the package is given by the `penfa` function, a short form for
+*PENalized Factor Analysis*, that implements the framework discussed in
+Geminiani et al. (2021). By default, it employs the automatic procedure for the
+optimal selection of the tuning parameter(s), and the default value of the
+influence factor is 4. If needed, these choices can be altered by changing the
+values of the corresponding arguments (`strategy` and `gamma`) in the function
+call (see `?penfa` and `?penfaOptions` for details).
+
+The `penfa` function allows users to choose among a variety of penalty
+functions, including **lasso**, adaptive lasso (**alasso**), smoothly clipped
+absolute deviation (**scad**), minimax concave penalty (**mcp**), and **ridge**.
+Except for the latter, these penalties can produce sparse estimates. For the
+sake of completeness, `penfa` can also estimate an unpenalized model. In this
+vignette, we show how users can estimate a single-group penalized factor model
+with the lasso and alasso penalty. Before jumping to the penalization though,
+the next section illustrates the estimation of an unpenalized model, which is a
+necessary step for obtaining the adaptive weights demanded by the alasso.
+
+### Unpenalized (MLE) model
+
+The `penfa` function can also be used to estimate a factor model by ordinary
+maximum likelihood. The first argument is the user-specified model `syntax`,
+followed by the data set `ccdata` with the observed variables. The scales of the
+latent factors are specified by setting `std.lv = TRUE`. Because no penalization
+is required, the shrinkage penalty `pen.shrink` is set to `"none"`. The `eta`
+argument relates to the tuning parameter, so in this case it is set to zero. The
+argument `strategy = "fixed"` prompts the estimation of the model with the value
+of the tuning parameter in `eta`. By default, the Fisher information is used in
+the trust-region algorithm. Some messages on convergence and admissibility are
+shown by default; setting `verbose = FALSE` prevents printed output.
+
+```{r mle.fit}
+mle.fit <- penfa(## factor model 
+                 model = syntax, 
+                 data  = ccdata,
+                 std.lv = TRUE,
+                 ## (no) penalization
+                 pen.shrink = "none",
+                 eta = list(shrink = c("none" = 0), diff = c("none" = 0)),
+                 strategy = "fixed")
+```
+
+The trust-region algorithm required a small number of iterations to converge.
+Since no penalization is imposed, the effective degrees of freedom (*edf*)
+coincide with the number of parameters. The estimated parameters can be
+extracted via the `coef` method. We collect them in the `mle.weights` vector,
+which will be used when fitting the penalized model with the alasso penalty.
+
+```{r weights}
+mle.weights <- coef(mle.fit)
+```
+
+The `penfaOut` function can be called to have a quick look at the estimated
+parameter matrices. We notice that there are a couple of cross-loadings. In this
+case, it is convenient to resort to **penalized factor analysis** to encourage
+*sparsity* in the factor loading matrix through a shrinkage penalty function.
+
+```{r penfaOut}
+penfaOut(mle.fit)
+```
+
+### Lasso 
+
+We start off with the lasso, one of the simplest and widely-known penalty
+functions. In the function call, we now specify `pen.shrink = "lasso"`, and we
+provide through the `eta` argument a starting value for the tuning parameter
+(here 0.01) required by the automatic procedure (`strategy = "auto"`). The name
+given to the starting value (here, the factor loading matrix `"lambda"`)
+reflects the parameter matrix to be penalized. All of its elements are
+penalized, which means here that the penalization is applied to all factor
+loadings (except the ones fixed for identification). See `?penfaOptions` for
+additional details on the possible options.
+
+```{r lasso}
+lasso.fit <- penfa(## factor model
+                   model  = syntax,
+                   data   = ccdata,
+                   std.lv = TRUE,
+                   ## penalization
+                   pen.shrink = "lasso",
+                   eta = list(shrink = c("lambda" = 0.01), diff = c("none" = 0)),
+                   ## automatic procedure
+                   strategy = "auto")
+```
+
+The `summary` method details information on the model characteristics, the
+optimization and penalization procedures as well as the parameter estimates with
+associated standard errors and confidence intervals. The optimal value of the
+tuning parameter for this lasso-penalized factor model is 0.014. The *Type*
+column distinguishes between the *fixed* parameters set to specific values for
+identification, the *free* parameters that have been estimated through ordinary
+maximum likelihood, and the penalized (*pen*) parameters. The standard errors
+here have been computed as the square root of the inverse of the penalized
+Fisher information matrix (Geminiani et al., 2021). The last columns report 95%
+confidence intervals (CI) for the model parameters. Standard errors and CI of
+the penalized parameters shrunken to zero are not displayed. A different
+significance level can be specified through the `level` argument in the
+`summary` call.
+
+```{r summary_lasso}
+summary(lasso.fit)
+```
+
+### Alasso
+
+The potential problem with the lasso is its bias issue. To solve the problem,
+researchers have formulated the so-called _oracle_ penalties, which include the
+alasso, scad, and mcp. 
+
+Since the scad and mcp cannot be used with the automatic procedure (model
+fitting is only possible for a fixed tuning value), we illustrate here the
+estimation process with the alasso penalty. As previously mentioned, the alasso
+requires a vector of adaptive weights. Although the `penfa` function can
+internally compute an unpenalized model to get these values, users can easily
+pass their own vector of values through the `weights` argument. The alasso
+relies on an additional tuning parameter (the exponent value). By default its
+value is set to 1, but users can increase it to encourage more sparsity (e.g.,
+set `a.alasso = 2` in the `penfa` call).
+
+```{r alasso}
+alasso.fit <- penfa(## factor model
+                    model  = syntax,
+                    data   = ccdata,
+                    std.lv = TRUE,
+                    ## penalization
+                    pen.shrink = "alasso",
+                    eta = list(shrink = c("lambda" = 0.01), diff = c("none" = 0)),
+                    ## automatic procedure
+                    strategy = "auto",
+                    gamma = 4,
+                    ## alasso
+                    weights = mle.weights,
+                    verbose = FALSE)
+alasso.fit
+```
+
+The printed output gives an overview of the data and the optimization process,
+including the employed optimizer and penalty function, the total number of
+iterations and the number of outer iterations of the automatic procedure. The
+automatic procedure is very fast, as it required a couple of iterations to reach
+convergence.
+
+#### Effective degrees of freedom
+
+The number of *edf* of this penalized model is 27.129, which is a fractional
+number, and is the sum of the contributions from the *edf* of each parameter. 
+
+```{r}
+alasso.fit@Inference$edf.single
+```
+
+
+#### Summary
+
+```{r alasso.summary}
+summary(alasso.fit)
+```
+
+The model produced a clear simple structure with the exception of a
+cross-loading for `h7` on the `voice` factor. The alasso penalty managed to set
+non-relevant loadings to zero without affecting the relevant coefficients.
+
+If users desire solutions sparser than the ones produced by default, they can
+increase the value of the influence factor (e.g., `gamma = 4.5`; by default
+`gamma = 4`) or the exponent of the alasso (e.g., `a.alasso = 2`; by default
+`a.alasso = 1`). Conversely, if the obtained solution is deemed too sparse,
+the value of the influence factor can possibly be decreased up to 1.
+
+In order to evaluate and choose among different penalized factor solutions,
+users can inspect the values of the generalized information criteria. In sparse
+settings, the GBIC (Generalized Bayesian Information criterion) is recommended. 
+The GBIC can be retrieved from `alasso.fit@Inference$IC$BIC` or through the `BIC` 
+function:
+
+```{r IC}
+BIC(alasso.fit)
+```
+
+
+Similarly, `AIC(alasso.fit)` gives the GIC (Generalized Information Criterion), 
+and`logLik(alasso.fit)` the model log-likelihood (without the penalty term).
+
+
+#### Implied moments
+
+The implied moments (here, the covariance matrix) can be found via the `fitted`
+method.
+
+```{r}
+implied <- fitted(alasso.fit)
+implied
+```
+
+#### Penalty matrix
+
+
+The penalty matrix is stored in `alasso.fit@Penalize@Sh.info$S.h`. Alternatively,
+it can be extracted via the `penmat` function (see below). 
+
+```{r}
+alasso_penmat <- penmat(alasso.fit)
+```
+
+The penalty matrix is diagonal with elements quantifying the extent to which
+each model parameters has been penalized. The values corresponding to the factor
+loadings are different from zero, as these are the penalized parameters, whereas
+the values for the unique variances (`h1~~h1` to `v5~~v5`) and the factor
+covariance (`help~~voice`) are zero, as these elements were not affected by the
+penalization. The magnitude of the penalization varies depending on the size of
+the loading to be penalized: small loadings received a considerable penalty,
+whereas large loadings a little one.
+
+```{r eval=FALSE, include=TRUE}
+diag(alasso_penmat)
+```
+
+```{r echo=FALSE}
+print(formatC(diag(alasso_penmat), digits = 2, format = "f"), quote = FALSE)
+```
+
+Applying the `plot` method to the penalty matrix allows to visualize an
+interactive heatmap of the log of the absolute value of the estimated penalty
+matrix. Due to space constraints, it may occur that some of the parameter labels
+on the axes are hidden. If it is the case, users can zoom in on the area of
+interest and inspect the corresponding penalty values.
+
+```{r plotly_heatmap, fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+plot(alasso_penmat)
+```
+
+
+#### Factor scores
+
+Lastly, the factor scores can be calculated via the `penfaPredict` function.
+
+```{r fscores}
+fscores <- penfaPredict(alasso.fit)
+```
+
+
+```{r datatable, echo=FALSE}
+formatRound(
+  datatable(fscores,
+            extensions = c('Buttons', 'Scroller'),
+            options = list(autoFill = TRUE,
+                           dom = 'Bfrtip',
+                           buttons = c('csv', 'excel', 'pdf'),
+                           deferRender = TRUE,
+                           scrollY = 200,
+                           scroller = TRUE)),
+  columns = c('help', 'voice'), digits=3
+)
+```
+
+## References
+
+* Fischer, R., Ferreira, M. C., Van Meurs, N. et al. (2019). "Does
+Organizational Formalization Facilitate Voice and Helping Organizational
+Citizenship Behaviors? It Depends on (National) Uncertainty Norms." Journal of
+International Business Studies, 50(1), 125-134.
+[https://doi.org/10.1057/s41267-017-0132-6](https://doi.org/10.1057/s41267-017-0132-6)
+
+* Fischer, R., & Karl, J. A. (2019). "A Primer to (Cross-Cultural) Multi-Group 
+Invariance Testing Possibilities in R." Frontiers in psychology, 10, 1507. [https://doi.org/10.3389/fpsyg.2019.01507](https://doi.org/10.3389/fpsyg.2019.01507)
+
+* Geminiani, E. (2020). "A Penalized Likelihood-Based Framework for Single and
+Multiple-Group Factor Analysis Models." PhD thesis, University of Bologna.
+[http://amsdottorato.unibo.it/9355/](http://amsdottorato.unibo.it/9355/)
+
+* Geminiani, E., Marra, G., & Moustaki, I. (2021). "Single- and Multiple-Group
+Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated
+Automatic Multiple Tuning Parameter Selection." Psychometrika, 86(1), 65-95. [https://doi.org/10.1007/s11336-021-09751-8](https://doi.org/10.1007/s11336-021-09751-8)

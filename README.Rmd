@@ -1,0 +1,111 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# penfa
+
+
+### Overview
+
+An R package for estimating single- and multiple-group penalized factor models
+via a trust-region algorithm with integrated automatic multiple tuning parameter
+selection. Supported penalties include lasso, adaptive lasso, scad, mcp, and
+ridge.
+
+### Installation
+
+The development version of penfa can be installed from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("egeminiani/penfa")
+```
+### Example
+
+This is a basic example showing how to fit a *PENalized Factor Analysis* model
+with the alasso penalty and the automatic tuning procedure. A shrinkage penalty 
+is applied to the whole factor loading matrix.
+
+Let's load the data (see `?ccdata` for details).
+
+```{r data}
+library(penfa)
+data(ccdata)
+```
+
+<font size="4">**Step 1**</font> : specify the model syntax
+
+```{r syntax}
+syntax = 'help  =∼   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+          voice =∼ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
+```
+
+<font size="4">**Step 2**</font>: fit the model
+
+```{r fit}
+alasso_fit <- penfa(model  = syntax,
+                    data   = ccdata,
+                    std.lv = TRUE,
+                    pen.shrink = "alasso")
+```
+
+
+```{r show}
+alasso_fit
+```
+
+<font size="4">**Step 3**</font>: inspect the results
+
+```{r summary}
+summary(alasso_fit)
+```
+
+
+### Tutorials
+
+* See `vignette("automatic-tuning-selection")` for the estimation of a penalized
+factor model with lasso and alasso penalties. The tuning parameter producing the
+optimal amount of sparsity in the factor loading matrix is found through the
+automatic tuning procedure.
+ 
+* See `vignette("grid-search-tuning-selection")` for the estimation of a
+penalized factor model with scad and mcp penalties. A grid search is conducted,
+and the optimal tuning parameter is the one generating the penalized model with
+the lowest GBIC (Generalized Bayesian Information Criterion).
+
+* See `vignette("multiple-group-analysis")` for the estimation of a
+multiple-group penalized factor model with the alasso penalty. This model
+encourages sparsity in the loading matrices and cross-group invariance of
+loadings and intercepts. The automatic multiple tuning parameter procedure is
+employed for finding the optimal tuning parameter vector.
+
+
+### Literature
+
+* Geminiani, E., Marra, G., & Moustaki, I. (2021). "Single- and Multiple-Group
+Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated
+Automatic Multiple Tuning Parameter Selection." Psychometrika, 86(1), 65-95. [https://doi.org/10.1007/s11336-021-09751-8](https://doi.org/10.1007/s11336-021-09751-8)
+
+* Geminiani, E. (2020). "A Penalized Likelihood-Based Framework for Single and
+Multiple-Group Factor Analysis Models." PhD thesis, University of Bologna.
+[http://amsdottorato.unibo.it/9355/](http://amsdottorato.unibo.it/9355/).
+
+
+### How to cite
+
+```{r citation, echo=FALSE}
+print(citation("penfa"), bibtex = TRUE)
+```
+

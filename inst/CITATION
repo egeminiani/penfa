@@ -1,0 +1,28 @@
+citHeader("To cite penfa in publications use:")
+
+citEntry(
+  entry    = "Article",
+  title    = "Single- and Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated Automatic Multiple Tuning Parameter Selection",
+  author   = "Geminiani Elena, Marra Giampiero, Moustaki Irini",
+  journal  = "Psychometrika",
+  year     = "2021",
+  volume   = "86",
+  number   = "1",
+  pages    = "65-95",
+  url      = "https://doi.org/10.1007/s11336-021-09751-8",
+  textVersion = paste("Geminiani, E., Marra, G., & Moustaki, I. (2021). Single-
+  and Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm Approach
+  with Integrated Automatic Multiple Tuning Parameter Selection.
+  Psychometrika, 86(1), 65-95. https://doi.org/10.1007/s11336-021-09751-8")
+)
+
+citEntry(
+  entry    = "Manual",
+  title    = "penfa: Single- And Multiple-Group Penalized Factor Analysis",
+  author   = "Elena Geminiani, Giampiero Marra and Irini Moustaki",
+  year     = "2021",
+  note = "R package version 0.0.0.9000",
+  textVersion = paste("Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa: Single- And Multiple-Group Penalized Factor Analysis. R package version 0.0.0.9000.")
+)
+
+

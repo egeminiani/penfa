@@ -1,0 +1,295 @@
+---
+title: "Penalized Factor Analysis: grid search"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Penalized Factor Analysis: grid search}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{css, echo=FALSE}
+pre {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 600px;
+}
+```
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+options(width = 100)
+library(DT)
+```
+
+## Introduction
+
+**Aim**. This vignette shows how to fit a penalized factor analysis model with
+the scad and mcp penalties using the routines in the `penfa` package. The
+employed penalty is aimed at encouraging sparsity in the factor loading matrix.
+Since the scad and mcp penalties cannot be used with the automatic tuning
+procedure (see Geminiani et al., 2021 for details), the optimal tuning parameter
+will be found through grid searches.
+
+**Data**. For illustration purposes, we use the cross-cultural data set `ccdata`
+containing the standardized ratings to 12 items concerning organizational
+citizenship behavior. Employees from different countries were asked to rate
+their attitudes towards helping other employees and giving suggestions for
+improved work conditions. The items are thought to measure two latent factors:
+**help**, defined by the first seven items (`h1` to `h7`), and **voice**,
+represented by the last five items (`v1` to `v5`). See `?ccdata` for details.
+
+This data set is a standardized version of the one in the
+[`ccpsyc`](https://github.com/Jo-Karl/ccpsyc/) package, and only considers
+employees from Lebanon and Taiwan (i.e., `"LEB"`, `"TAIW"`). 
+This vignette is meant as a demo of the capabilities of `penfa`; please refer to 
+Fischer et al. (2019) and Fischer and Karl (2019) for a description and
+analysis of these data.
+
+Let us load and inspect `ccdata`.
+
+```{r dataset}
+library(penfa)
+data(ccdata)
+
+summary(ccdata)
+```
+
+## Model specification
+
+Before fitting the model, we need to write a model syntax describing the
+relationships between the items and the latent factors. To facilitate its
+formulation, the rules for the syntax specification broadly follow the ones
+required by [lavaan](https://cran.r-project.org/web/packages/lavaan/). The
+syntax must be enclosed in single quotes `' '`.
+
+```{r syntax}
+syntax = 'help  =∼   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+          voice =∼ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
+```
+
+
+The factors `help` and `voice` appear on the left-hand side, whereas the
+observed variables on the left-hand side. Following the rationale in Geminiani
+et al. (2021), we only specify the minimum number of identification constraints.
+We are setting the scales of the factors by fixing their factor variances to 1.
+This can be done in one of two ways: 1) by adding `'help ~~ 1*help'` and `'voice
+~~ 1*voice'`  to the syntax above; or 2) by setting the argument `std.lv = TRUE`
+in the fitting function (see below). To avoid rotational freedom, we fix one
+loading per factor to zero. Parameters can be easily fixed to user-defined
+values through the pre-multiplication mechanism. By default, unique variances
+are automatically added to the model, and the factors are allowed to correlate.
+These specifications can be modified by altering the syntax (see `?penfa` for
+details on how to write the model syntax).
+
+## Model fitting
+
+The core of the package is given by the `penfa` function, a short form for
+*PENalized Factor Analysis*, that implements the framework discussed in
+Geminiani et al. (2021). If users decide for either the
+`scad` or `mcp` penalties, they need to use `strategy = "fixed"` since the
+automatic procedure is not feasible.
+
+### Scad 
+
+We start off with the scad. In the function call, we now specify `pen.shrink =
+"scad"`, and we provide through the `eta` argument the fixed value of the tuning
+parameter to be employed during optimization (here, for instance, 0.05). The
+name given to the starting value (here, the factor loading matrix `"lambda"`)
+reflects the parameter matrix to be penalized. All of its elements are
+penalized, which means here that the penalization is applied to all factor
+loadings (except the ones fixed for identification). The scad penalty relies on
+an additional shape parameter, which is set by default to 3.7  (Fan and Li
+2001). This value can be conveniently modified through the `a.scad` argument.
+See `?penfaOptions` for additional details on the possible options.
+
+```{r scad}
+scad.fit <- penfa(## factor model
+                  model  = syntax,
+                  data   = ccdata,
+                  std.lv = TRUE,
+                  ## penalization
+                  pen.shrink = "scad",
+                  eta = list(shrink = c("lambda" = 0.05), diff = c("none" = 0)),
+                  ## fixed tuning
+                  strategy = "fixed")
+```
+
+#### Grid search
+
+In order to find the optimal value of the tuning parameter, a grid search needs
+to be conducted, and the optimal model is the one with the lowest GBIC
+(Generalized Bayesian Information Criterion). For demo purposes, we use a grid
+of 51 values evenly spaced between 0 and 0.15. However, for accurate analyses,
+please consider finer grids (of at least 200 elements) with an upper bound
+reasonable for the data at hand.
+
+```{r scad_grid_search}
+# Grid of values for tuning parameter
+eta.grid <- seq(0, 0.15, length.out = 51)
+
+# Return GBIC from a converged and admissible penfa model with fixed tuning
+penfa.fixedTun <- function(eta, penalty, ...){
+  
+  fitted <- penfa(model = syntax, data = ccdata, 
+                  std.lv = TRUE, pen.shrink = penalty, 
+                  eta = list(shrink = c("lambda" = eta), diff = c("none" = 0)),
+                  strategy = "fixed", verbose = FALSE, ...)
+  
+  if(all(fitted@Vcov$solution) & fitted@Vcov$admissibility)
+    return(BIC(fitted))
+}
+
+# additional penfaOptions can be passed
+GBIC.scad <- sapply(eta.grid, penfa.fixedTun, penalty = "scad") 
+```
+
+We can plot `GBIC` values across the tuning values. 
+
+```{r scad_plot, fig.height=4, fig.width=6, message=FALSE, warning=FALSE}
+optimtun.scad <- eta.grid[[which.min(GBIC.scad)]]
+  
+p <- plotly::plot_ly(x = eta.grid, y = GBIC.scad, type = 'scatter', mode = 'lines')
+plotly::layout(p, xaxis = list(showline = TRUE),
+               title = list(text = "GBIC values across tuning parameters"))
+```
+
+
+We can ultimately fit the model with the optimal tuning parameter (here, 0.114),
+that is, the one generating the penalized model with the lowest GBIC. The
+`summary` method details information on the model characteristics, the
+optimization and penalization procedures as well as the parameter estimates with
+associated standard errors and confidence intervals. The *Type* column
+distinguishes between the *fixed* parameters set to specific values for
+identification, the *free* parameters that have been estimated through ordinary
+maximum likelihood, and the penalized (*pen*) parameters. The standard errors
+here have been computed as the square root of the inverse of the penalized
+Fisher information matrix (Geminiani et al., 2021). The last
+columns report 95% confidence intervals (CI) for the model parameters. Standard
+errors and CI of the penalized parameters shrunken to zero are not displayed. A
+different significance level can be specified through the `level` argument in
+the `summary` call.
+
+
+```{r scad_fit}
+scad.fit <- penfa(## factor model 
+                  model = syntax, 
+                  data = ccdata, 
+                  std.lv = TRUE, 
+                  ## penalization
+                  pen.shrink = "scad", 
+                  # optimal tuning
+                  eta = list(shrink = c("lambda" = optimtun.scad), diff = c("none" = 0)),
+                  strategy = "fixed", 
+                  verbose = FALSE)
+summary(scad.fit)
+```
+
+The penalty matrix can be inspected and plotted as shown in
+`vignette("automatic-tuning-selection")`.
+
+#### Implied moments
+
+The implied moments (here, the covariance matrix) can be found via the `fitted`
+method.
+
+```{r scad_implied}
+implied <- fitted(scad.fit)
+implied
+```
+
+### Factor scores
+
+Lastly, the factor scores can be calculated via the `penfaPredict` function.
+
+```{r fscores}
+fscores <- penfaPredict(scad.fit)
+```
+
+
+```{r datatable, echo=FALSE}
+formatRound(
+  datatable(fscores,
+            extensions = c('Buttons', 'Scroller'),
+            options = list(autoFill = TRUE,
+                           dom = 'Bfrtip',
+                           buttons = c('csv', 'excel', 'pdf'),
+                           deferRender = TRUE,
+                           scrollY = 200,
+                           scroller = TRUE)),
+  columns = c('help', 'voice'), digits=3
+)
+```
+
+
+### Mcp 
+
+We can fit a penalized factor model with the mcp penalty in a way similar to the
+scad. By default the shape parameter of the mcp is set to 3. This value can be
+conveniently modified through the `a.mcp` argument. See `?penfaOptions` for
+additional details on the possible options.
+
+```{r mcp_grid_search, fig.height=4, fig.width=6, message=FALSE, warning=FALSE}
+GBIC.mcp <- sapply(eta.grid, penfa.fixedTun, penalty = "mcp")
+
+optimtun.mcp <- eta.grid[[which.min(GBIC.mcp)]]
+q <- plotly::plot_ly(x = eta.grid, y = GBIC.mcp, type = 'scatter', mode = 'lines')
+plotly::layout(q,  xaxis = list(showline = TRUE),
+               title = list(text = "GBIC values across tuning parameters"))
+```
+
+The tuning value equal to 0.141 generated the model with the lowest GBIC.
+
+```{r}
+mcp.fit <- penfa(## factor model 
+                 model = syntax, 
+                 data = ccdata, 
+                 std.lv = TRUE, 
+                 ## penalization
+                 pen.shrink = "mcp", 
+                 # optimal tuning
+                 eta = list(shrink = c("lambda" = optimtun.mcp), diff = c("none" = 0)),
+                 strategy = "fixed", 
+                 verbose = FALSE)
+summary(mcp.fit)
+```
+
+
+## Conclusion
+
+Implementing the above approach in the multiple-group case would imply carrying
+out grid searches in three dimensions to find the optimal tuning parameter
+vector. This is clearly not advisable, as it would introduce further
+complications and possibly new computational problems and instabilities. For
+this reason, we suggest users to rely on the automatic tuning parameter
+selection procedure, whose applicability is demonstrated in the
+package vignettes for single (`vignette("automatic-tuning-selection")`) and
+multiple-group (`vignette("multiple-group-analysis")`) penalized
+models.
+
+
+## References
+
+* Fan, J., & Li, R. 2001. "Variable Selection via Nonconcave Penalized Likelihood 
+and Its Oracle Properties." Journal of the American Statistical 
+Association 96(456), 1348–60. [https://doi.org/10.1198/016214501753382273](https://doi.org/10.1198/016214501753382273)
+
+* Fischer, R., Ferreira, M. C., Van Meurs, N. et al. (2019). "Does
+Organizational Formalization Facilitate Voice and Helping Organizational
+Citizenship Behaviors? It Depends on (National) Uncertainty Norms." Journal of
+International Business Studies, 50(1), 125-134.
+[https://doi.org/10.1057/s41267-017-0132-6](https://doi.org/10.1057/s41267-017-0132-6)
+
+* Fischer, R., & Karl, J. A. (2019). "A Primer to (Cross-Cultural) Multi-Group 
+Invariance Testing Possibilities in R." Frontiers in psychology, 10, 1507. [https://doi.org/10.3389/fpsyg.2019.01507](https://doi.org/10.3389/fpsyg.2019.01507)
+
+* Geminiani, E. (2020). "A Penalized Likelihood-Based Framework for Single and
+Multiple-Group Factor Analysis Models." PhD thesis, University of Bologna.
+[http://amsdottorato.unibo.it/9355/](http://amsdottorato.unibo.it/9355/)
+
+* Geminiani, E., Marra, G., & Moustaki, I. (2021). "Single- and Multiple-Group
+Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated
+Automatic Multiple Tuning Parameter Selection." Psychometrika, 86(1), 65-95. [https://doi.org/10.1007/s11336-021-09751-8](https://doi.org/10.1007/s11336-021-09751-8)
