@@ -79,8 +79,8 @@ factor), then the formula specifies a factor mean. By default, unique variances
 are automatically added to the model, and the factors are allowed to correlate.
 
 ```{r syntax_mg}
-syntax.mg = 'help  =∼ 1*h1 +          h2 +          h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
-             voice =∼ 0*h1 + start(0)*h2 + start(0)*h3 + h4 + h5 + h6 + h7 + 1*v1 + v2 + v3 + v4 + v5
+syntax.mg = 'help  =~ 1*h1 +          h2 +          h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+             voice =~ 0*h1 + start(0)*h2 + start(0)*h3 + h4 + h5 + h6 + h7 + 1*v1 + v2 + v3 + v4 + v5
             
              h2 + h3 + h4 + h5 + h6 + h7 + v2 + v3 + v4 + v5 ~ 1 
              help  ~ NA*1
