@@ -1,0 +1,49 @@
+.navbar-default {
+    background-color: #119da4;
+    border-color: #dddddd;
+    olor: #ffffff;
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    background-color: #e9ecef;
+}
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
+    background-color: #e9ecef;
+}
+
+
+/* Text color in header */
+.navbar-default .navbar-nav>li>a{
+    color: #ffffff;
+}
+.navbar-default .navbar-link {
+    color: #ffffff;
+}
+.navbar-default .navbar-link:hover {
+    color: #ffffff;
+}
+
+/* Colors for hover in header */
+.navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+    color: #ffffff;
+}
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
+    color: #ffffff;
+}
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+    color: #ffffff;
+}
+/* black; for views from mobiles */
+.navbar-default .navbar-nav .open .dropdown-menu>li>a {
+    color: #000000;
+}
+.navbar-default .navbar-nav .open .dropdown-menu>li>a:hover, .navbar-default .navbar-nav .open .dropdown-menu>li>a:focus {
+    color: #000000;
+}
+
+
+.fl      {color: #1b7cfa;} /* numbers*/
+.fu      {color: #1b7cfa;} /* function */
+.ch,.st  {color: #10b58f;} /* string */
+.kw      {color: #10b58f;} /* keyword */
+.co      {color: #77807e;} /* comment */
+code a, pre a { color: #1b7cfa; }
