@@ -64,8 +64,8 @@ required by [lavaan](https://cran.r-project.org/web/packages/lavaan/). The
 syntax must be enclosed in single quotes `' '`.
 
 ```{r syntax}
-syntax = 'help  =∼   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
-          voice =∼ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
+syntax = 'help  =~   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+          voice =~ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
 ```
 
 
