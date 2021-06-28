@@ -155,7 +155,7 @@ given to the starting value (here, the factor loading matrix `"lambda"`)
 reflects the parameter matrix to be penalized. All of its elements are
 penalized, which means here that the penalization is applied to all factor
 loadings (except the ones fixed for identification). See `?penfaOptions` for
-additional details on the possible options.
+additional details on the available options.
 
 ```{r lasso}
 lasso.fit <- penfa(## factor model
