@@ -338,6 +338,14 @@ formatRound(
 )
 ```
 
+## R Session
+
+```{r}
+sessionInfo()
+```
+
+
+
 ## References
 
 * Fischer, R., Ferreira, M. C., Van Meurs, N. et al. (2019). "Does

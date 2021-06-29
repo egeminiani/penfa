@@ -81,7 +81,7 @@ are automatically added to the model, and the factors are allowed to correlate.
 ```{r syntax_mg}
 syntax.mg = 'help  =~ 1*h1 +          h2 +          h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
              voice =~ 0*h1 + start(0)*h2 + start(0)*h3 + h4 + h5 + h6 + h7 + 1*v1 + v2 + v3 + v4 + v5
-            
+             
              h2 + h3 + h4 + h5 + h6 + h7 + v2 + v3 + v4 + v5 ~ 1 
              help  ~ NA*1
              voice ~ NA*1 '
@@ -153,7 +153,7 @@ alasso.fitMG <- penfa(## factor model
                       pen.shrink = "alasso",
                       pen.diff = "alasso",
                       eta = list(shrink = c("lambda" = 0.01),
-                                 diff   = c("lambda" = 0.01, "tau" = 0.01)),
+                                 diff   = c("lambda" = 0.1, "tau" = 0.01)),
                       ## automatic procedure
                       strategy = "auto",
                       gamma = 4,
@@ -172,7 +172,7 @@ alasso.fitMG
 
 From the `summary` of the fitted object we can notice that the automatic tuning
 procedure required just a couple of iterations to converge. The optimal tuning
-parameters are 0.002 for Penalty 1, 30590.875 for Penalty 2, and 0.008 for
+parameters are 0.002 for Penalty 1, 29695.34 for Penalty 2, and 0.008 for
 Penalty 3.
 
 ```{r}
@@ -190,7 +190,7 @@ penfaOut(alasso.fitMG, which = c("lambda", "tau"))
 
 ### Effective degrees of freedom
 
-The number of *edf* of this penalized model is 56.77, which is a fractional
+The number of *edf* of this penalized model is 56.76, which is a fractional
 number, and is the sum of the contributions from the *edf* of each model
 parameter. Each **edf** quantifies the impact of the three penalties on each 
 parameter. Parameters unaffected by the penalization have an *edf* equal to 1.
@@ -291,6 +291,15 @@ formatRound(
                            rowGroup = list(dataSrc = 3))),
   columns = c('help', 'voice'), digits=3)
 ```
+
+
+## R Session
+
+```{r}
+sessionInfo()
+```
+
+
 
 ## References
 

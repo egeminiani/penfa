@@ -1,6 +1,7 @@
 template:
   params:
     bootswatch: readable
+    ganalytics: G-PQWMEC6S1Z
 reference:
 
 - title: Overview

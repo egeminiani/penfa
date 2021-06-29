@@ -271,6 +271,14 @@ multiple-group (`vignette("multiple-group-analysis")`) penalized
 models.
 
 
+## R Session
+
+```{r}
+sessionInfo()
+```
+
+
+
 ## References
 
 * Fan, J., & Li, R. 2001. "Variable Selection via Nonconcave Penalized Likelihood 
