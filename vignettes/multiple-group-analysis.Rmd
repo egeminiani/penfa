@@ -21,7 +21,6 @@ pre[class] {
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 options(width = 100)
-library(DT)
 ```
 
 ## Introduction
@@ -172,8 +171,9 @@ alasso.fitMG
 
 From the `summary` of the fitted object we can notice that the automatic tuning
 procedure required just a couple of iterations to converge. The optimal tuning
-parameters are 0.002 for Penalty 1, 29695.34 for Penalty 2, and 0.008 for
-Penalty 3.
+parameters are  `r round(alasso.fitMG@Penalize@tuning$shrink, 3)` for Penalty 1, 
+`r round(alasso.fitMG@Penalize@tuning$diff[1], 3)` for Penalty 2, and 
+`r round(alasso.fitMG@Penalize@tuning$diff[2], 3)` for Penalty 3.
 
 ```{r}
 summary(alasso.fitMG)
@@ -190,10 +190,11 @@ penfaOut(alasso.fitMG, which = c("lambda", "tau"))
 
 ### Effective degrees of freedom
 
-The number of *edf* of this penalized model is 56.76, which is a fractional
-number, and is the sum of the contributions from the *edf* of each model
-parameter. Each **edf** quantifies the impact of the three penalties on each 
-parameter. Parameters unaffected by the penalization have an *edf* equal to 1.
+The number of *edf* of this penalized model is `r round(alasso.fitMG@Inference$edf, 2)``, 
+which is a fractional number, and is the sum of the contributions from the *edf*
+of each model parameter. Each **edf** quantifies the impact of the three
+penalties on each parameter. Parameters unaffected by the penalization have an
+*edf* equal to 1.
 
 ```{r eval=FALSE, include=TRUE}
 alasso.fitMG@Inference$edf.single
@@ -276,20 +277,7 @@ from each group in a single data frame with a group column.
 
 ```{r fscores_mg}
 fscoresMG <- penfaPredict(alasso.fitMG, assemble = TRUE)
-```
-
-```{r fscores_datatable, echo=FALSE}
-formatRound(
-  datatable(fscoresMG, 
-            extensions = c('Buttons', 'Scroller', 'RowGroup'),
-            options = list(autoFill = TRUE, 
-                           dom = 'Bfrtip',
-                           buttons = c('csv', 'excel', 'pdf'),
-                           deferRender = TRUE,
-                           scrollY = 200,
-                           scroller = TRUE,
-                           rowGroup = list(dataSrc = 3))),
-  columns = c('help', 'voice'), digits=3)
+head(fscoresMG)
 ```
 
 

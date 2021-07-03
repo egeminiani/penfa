@@ -25,7 +25,7 @@ Description: Fits single- and multiple-group penalized factor analysis models
 License: GPL-3
 Depends: R(>= 3.5.0)
 Imports: MASS, methods, mgcv, GJRM, stats, trust, utils
-Suggests: cartography, DT, knitr, plotly, rmarkdown
+Suggests: cartography, knitr, plotly, rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true

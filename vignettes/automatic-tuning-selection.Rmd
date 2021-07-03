@@ -22,7 +22,6 @@ pre[class] {
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
 options(width = 100)
-library(DT)
 ```
 
 ## Introduction
@@ -172,16 +171,16 @@ lasso.fit <- penfa(## factor model
 The `summary` method details information on the model characteristics, the
 optimization and penalization procedures as well as the parameter estimates with
 associated standard errors and confidence intervals. The optimal value of the
-tuning parameter for this lasso-penalized factor model is 0.014. The *Type*
-column distinguishes between the *fixed* parameters set to specific values for
-identification, the *free* parameters that have been estimated through ordinary
-maximum likelihood, and the penalized (*pen*) parameters. The standard errors
-here have been computed as the square root of the inverse of the penalized
-Fisher information matrix (Geminiani et al., 2021). The last columns report 95%
-confidence intervals (CI) for the model parameters. Standard errors and CI of
-the penalized parameters shrunken to zero are not displayed. A different
-significance level can be specified through the `level` argument in the
-`summary` call.
+tuning parameter for this lasso-penalized factor model is 
+`r round(lasso.fit@Penalize@tuning$shrink, 3)`. The *Type* column distinguishes 
+between the *fixed* parameters set to specific values for identification, the
+*free* parameters that have been estimated through ordinary maximum likelihood,
+and the penalized (*pen*) parameters. The standard errors here have been
+computed as the square root of the inverse of the penalized Fisher information
+matrix (Geminiani et al., 2021). The last columns report 95% confidence
+intervals (CI) for the model parameters. Standard errors and CI of the penalized
+parameters shrunken to zero are not displayed. A different significance level
+can be specified through the `level` argument in the `summary` call.
 
 ```{r summary_lasso}
 summary(lasso.fit)
@@ -228,8 +227,9 @@ convergence.
 
 #### Effective degrees of freedom
 
-The number of *edf* of this penalized model is 27.129, which is a fractional
-number, and is the sum of the contributions from the *edf* of each parameter. 
+The number of *edf* of this penalized model is 
+`r round(alasso.fit@Inference$edf, 3)`, which is a fractional number, and 
+is the sum of the contributions from the *edf* of each parameter. 
 
 ```{r}
 alasso.fit@Inference$edf.single
@@ -321,22 +321,9 @@ Lastly, the factor scores can be calculated via the `penfaPredict` function.
 
 ```{r fscores}
 fscores <- penfaPredict(alasso.fit)
+head(fscores)
 ```
 
-
-```{r datatable, echo=FALSE}
-formatRound(
-  datatable(fscores,
-            extensions = c('Buttons', 'Scroller'),
-            options = list(autoFill = TRUE,
-                           dom = 'Bfrtip',
-                           buttons = c('csv', 'excel', 'pdf'),
-                           deferRender = TRUE,
-                           scrollY = 200,
-                           scroller = TRUE)),
-  columns = c('help', 'voice'), digits=3
-)
-```
 
 ## R Session
 

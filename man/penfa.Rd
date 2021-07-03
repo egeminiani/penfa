@@ -543,7 +543,7 @@ alasso_fitMG <- penfa(## factor model
                       pen.shrink = "alasso",
                       pen.diff = "alasso",
                       eta = list(shrink = c("lambda" = 0.01),
-                      diff = c("lambda" = 0.01, "tau" = 0.01)),
+                      diff = c("lambda" = 0.1, "tau" = 0.01)),
                       ## automatic procedure
                       strategy = "auto",
                       gamma = 4,

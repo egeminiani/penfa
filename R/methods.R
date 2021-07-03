@@ -379,8 +379,9 @@ object_print_optim <- function(object, nd = 3L, extra = FALSE){
     c2 <- c(c2, sprintf(num.format, object@Inference$edf))
   }
 
-  if(extra){
+  if(extra & !is.null(object@Inference$IC$AIC) & !is.null(object@Inference$IC$BIC)){
     c1 <- c(c1, "GIC", "GBIC")
+
     c2 <- c(c2, sprintf(num.format, object@Inference$IC$AIC),
             sprintf(num.format, object@Inference$IC$BIC))
   }
@@ -629,7 +630,7 @@ penfaParEstim <- function(object,
   }
 
   # add se
-  if(se) {
+  if(se & !is.null(PARTABLE$se)) {
     LIST$se <- PARTABLE$se
     # handle tiny SEs
     LIST$se <- ifelse(LIST$se < sqrt(.Machine$double.eps), 0,  LIST$se)
@@ -641,7 +642,7 @@ penfaParEstim <- function(object,
   ind.fixed.p <- which(LIST$type == "fixed")
 
   # confidence interval
-  if(se & ci) {
+  if(se & ci & !is.null(PARTABLE$se)) {
     LIST$ci.upper <- LIST$ci.lower <- NA
     ci  <- compute_CI(param = object@Optim$x, VCOV = object@Vcov$vcov,
                       std.err = object@Vcov$se, modpenalty = object@Penalize,
@@ -669,6 +670,12 @@ penfaParEstim <- function(object,
   # Collect info on significance level by renaming the columns ci.lower and ci.upper
   alpha   <- (1 - level)/2; alpha <- c(alpha, 1 - alpha)
   names(LIST)[names(LIST) %in% c("ci.lower", "ci.upper")] <- paste0("ci_",alpha)
+
+  # Give warning if standard errors and confidence intervals are not printed out
+  # due to convergence problems
+  if(is.null(PARTABLE$se)){
+    warning("penfa WARNING: standard errors were not computed due to convergence issues.")
+  }
 
   if(output == "text") {
     class(LIST) <- c("penfaParEstim", "penfa.data.frame", "data.frame")

@@ -8,11 +8,12 @@
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg)](https://cran.r-project.org/)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2021--06--29-brightgreen.svg)](https://github.com/egeminiani/penfa/commits/main)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2021--07--03-brightgreen.svg)](https://github.com/egeminiani/penfa/commits/main)
 [![Website](https://img.shields.io/badge/website-penfa-orange.svg?colorB=E91E63)](https://egeminiani.github.io/penfa/)
 [![GitHub
 version](https://img.shields.io/badge/GitHub-0.0.0.9000-orange.svg?style=flat-square)](https://github.com/egeminiani/penfa/)
 [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![R-CMD-check](https://github.com/egeminiani/penfa/workflows/R-CMD-check/badge.svg)](https://github.com/egeminiani/penfa/actions)
 <!-- badges: end -->
 
 ### Overview
