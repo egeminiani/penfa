@@ -724,7 +724,7 @@ h1 + v1 ~ 0*1 '</span>
                       pen.shrink <span class='op'>=</span> <span class='st'>"alasso"</span>,
                       pen.diff <span class='op'>=</span> <span class='st'>"alasso"</span>,
                       eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>,
-                      diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.01</span>, <span class='st'>"tau"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span><span class='op'>)</span>,
+                      diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.1</span>, <span class='st'>"tau"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span><span class='op'>)</span>,
                       <span class='co'>## automatic procedure</span>
                       strategy <span class='op'>=</span> <span class='st'>"auto"</span>,
                       gamma <span class='op'>=</span> <span class='fl'>4</span>,
@@ -732,15 +732,15 @@ h1 + v1 ~ 0*1 '</span>
                       weights <span class='op'>=</span> <span class='va'>mle_weightsMG</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; 
 #&gt; Automatic procedure: 
-#&gt; Iteration  1 : 0.00215339 3061215.58594407 0.00275238 
-#&gt; Iteration  2 : 0.00196371 4134.86838014 0.00811975 
+#&gt; Iteration  1 : 0.00215674 6115.68152854 0.00300201 
+#&gt; Iteration  2 : 0.00196778 4011.40169767 0.00772393 
 #&gt; 
-#&gt; Largest absolute gradient value: 68.84019108
+#&gt; Largest absolute gradient value: 61.89552041
 #&gt; Fisher information matrix is positive definite
-#&gt; Eigenvalue range: [53.19646, 1.21016e+12]
-#&gt; Trust region iterations: 22 
+#&gt; Eigenvalue range: [53.00923, 1.174025e+12]
+#&gt; Trust region iterations: 18 
 #&gt; Factor solution: admissible 
-#&gt; Effective degrees of freedom: 56.77369  </div><div class='input'><span class='va'>alasso_fitMG</span>
+#&gt; Effective degrees of freedom: 56.75744  </div><div class='input'><span class='va'>alasso_fitMG</span>
 </div><div class='output co'>#&gt; penfa 0.0.0.9000 reached convergence
 #&gt; 
 #&gt;   Number of observations per group:                            
@@ -751,9 +751,9 @@ h1 + v1 ~ 0*1 '</span>
 #&gt;   Optimization method                              trust-region
 #&gt;   Information                                            fisher
 #&gt;   Strategy                                                 auto
-#&gt;   Number of iterations (total)                               93
+#&gt;   Number of iterations (total)                              150
 #&gt;   Number of two-steps (automatic)                             2
-#&gt;   Effective degrees of freedom                           56.774
+#&gt;   Effective degrees of freedom                           56.757
 #&gt;                                                                
 #&gt;   Penalty functions:                                           
 #&gt;     Sparsity                                             alasso

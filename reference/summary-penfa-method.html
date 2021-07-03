@@ -243,15 +243,15 @@ are displayed.</p></td>
 #&gt; Effective degrees of freedom: 94  
 #&gt; 
 #&gt; Automatic procedure: 
-#&gt; Iteration  1 : 0.00215339 3061215.58594407 0.00275238 
-#&gt; Iteration  2 : 0.00196371 4134.86838014 0.00811975 
+#&gt; Iteration  1 : 0.00215674 6115.68152854 0.00300201 
+#&gt; Iteration  2 : 0.00196778 4011.40169767 0.00772393 
 #&gt; 
-#&gt; Largest absolute gradient value: 68.84019108
+#&gt; Largest absolute gradient value: 61.89552041
 #&gt; Fisher information matrix is positive definite
-#&gt; Eigenvalue range: [53.19646, 1.21016e+12]
-#&gt; Trust region iterations: 22 
+#&gt; Eigenvalue range: [53.00923, 1.174025e+12]
+#&gt; Trust region iterations: 18 
 #&gt; Factor solution: admissible 
-#&gt; Effective degrees of freedom: 56.77369  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
+#&gt; Effective degrees of freedom: 56.75744  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; penfa 0.0.0.9000 reached convergence
 #&gt; 
 #&gt;   Number of observations                                    767
@@ -350,15 +350,15 @@ are displayed.</p></td>
 #&gt;   Optimization method                              trust-region
 #&gt;   Information                                            fisher
 #&gt;   Strategy                                                 auto
-#&gt;   Number of iterations (total)                               93
+#&gt;   Number of iterations (total)                              150
 #&gt;   Number of two-steps (automatic)                             2
 #&gt;   Influence factor                                            4
 #&gt;   Number of parameters:                                        
 #&gt;     Free                                                     34
 #&gt;     Penalized                                                60
-#&gt;   Effective degrees of freedom                           56.774
-#&gt;   GIC                                                 17095.563
-#&gt;   GBIC                                                17359.135
+#&gt;   Effective degrees of freedom                           56.757
+#&gt;   GIC                                                 17096.169
+#&gt;   GBIC                                                17359.665
 #&gt;                                                                
 #&gt;   Penalty functions:                                           
 #&gt;     Sparsity                                             alasso
@@ -371,7 +371,7 @@ are displayed.</p></td>
 #&gt;     Sparsity                                                   
 #&gt;      - Factor loadings                                    0.002
 #&gt;     Invariance                                                 
-#&gt;      - Factor loadings                                 4134.868
+#&gt;      - Factor loadings                                 4011.402
 #&gt;      - Intercepts                                         0.008
 #&gt;                                                                
 #&gt; 
@@ -384,12 +384,12 @@ are displayed.</p></td>
 #&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
 #&gt;   help =~                                                      
 #&gt;     h1             fixed       1.000             1.000    1.000
-#&gt;     h2               pen       1.104    0.039    1.027    1.181
+#&gt;     h2               pen       1.103    0.039    1.027    1.180
 #&gt;     h3               pen       0.996    0.040    0.917    1.076
-#&gt;     h4               pen       1.191    0.049    1.096    1.287
-#&gt;     h5               pen       1.106    0.038    1.030    1.181
-#&gt;     h6               pen       1.082    0.052    0.981    1.183
-#&gt;     h7               pen       0.741    0.065    0.613    0.868
+#&gt;     h4               pen       1.196    0.050    1.099    1.294
+#&gt;     h5               pen       1.106    0.038    1.031    1.181
+#&gt;     h6               pen       1.084    0.051    0.984    1.185
+#&gt;     h7               pen       0.742    0.065    0.614    0.870
 #&gt;     v1             fixed       0.000             0.000    0.000
 #&gt;     v2               pen       0.000                           
 #&gt;     v3               pen       0.000                           
@@ -397,12 +397,12 @@ are displayed.</p></td>
 #&gt;     v5               pen      -0.000                           
 #&gt;   voice =~                                                     
 #&gt;     h1             fixed       0.000             0.000    0.000
-#&gt;     h2               pen      -0.000                           
-#&gt;     h3               pen       0.000                           
-#&gt;     h4               pen      -0.033                           
+#&gt;     h2               pen       0.000                           
+#&gt;     h3               pen      -0.000                           
+#&gt;     h4               pen      -0.038                           
 #&gt;     h5               pen       0.000                           
-#&gt;     h6               pen       0.046                           
-#&gt;     h7               pen       0.337    0.056    0.227    0.447
+#&gt;     h6               pen       0.044                           
+#&gt;     h7               pen       0.336    0.056    0.225    0.446
 #&gt;     v1             fixed       1.000             1.000    1.000
 #&gt;     v2               pen       1.015    0.028    0.960    1.070
 #&gt;     v3               pen       0.977    0.029    0.920    1.034
@@ -412,35 +412,35 @@ are displayed.</p></td>
 #&gt; Covariances:
 #&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
 #&gt;   help ~~                                                      
-#&gt;     voice           free       0.759    0.062    0.636    0.881
+#&gt;     voice           free       0.759    0.062    0.637    0.882
 #&gt; 
 #&gt; Intercepts:
 #&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
 #&gt;    .h1             fixed       0.000             0.000    0.000
 #&gt;    .v1             fixed       0.000             0.000    0.000
-#&gt;    .h2               pen      -0.014    0.031   -0.075    0.047
+#&gt;    .h2               pen      -0.012    0.031   -0.073    0.049
 #&gt;    .h3               pen      -0.001    0.032   -0.062    0.061
-#&gt;    .h4               pen      -0.058    0.033   -0.122    0.005
-#&gt;    .h5               pen       0.025    0.031   -0.035    0.085
+#&gt;    .h4               pen      -0.058    0.033   -0.122    0.007
+#&gt;    .h5               pen       0.024    0.031   -0.037    0.084
 #&gt;    .h6               pen       0.003    0.029   -0.055    0.060
 #&gt;    .h7               pen      -0.004    0.025   -0.054    0.045
-#&gt;    .v2               pen      -0.023    0.026   -0.074    0.027
+#&gt;    .v2               pen      -0.022    0.026   -0.072    0.029
 #&gt;    .v3               pen      -0.001    0.025   -0.050    0.048
 #&gt;    .v4               pen      -0.001    0.025   -0.050    0.048
-#&gt;    .v5               pen       0.005    0.026   -0.046    0.056
-#&gt;     help            free       0.092    0.049   -0.004    0.189
+#&gt;    .v5               pen       0.004    0.026   -0.047    0.055
+#&gt;     help            free       0.092    0.049   -0.005    0.189
 #&gt;     voice           free       0.148    0.051    0.048    0.248
 #&gt; 
 #&gt; Variances:
 #&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
 #&gt;    .h1              free       0.382    0.029    0.326    0.438
-#&gt;    .h2              free       0.213    0.017    0.179    0.247
+#&gt;    .h2              free       0.213    0.017    0.180    0.247
 #&gt;    .h3              free       0.344    0.026    0.293    0.395
-#&gt;    .h4              free       0.127    0.012    0.103    0.150
+#&gt;    .h4              free       0.126    0.012    0.103    0.150
 #&gt;    .h5              free       0.162    0.014    0.135    0.189
 #&gt;    .h6              free       0.164    0.014    0.137    0.191
-#&gt;    .h7              free       0.210    0.016    0.178    0.242
-#&gt;    .v1              free       0.176    0.016    0.145    0.207
+#&gt;    .h7              free       0.210    0.016    0.178    0.241
+#&gt;    .v1              free       0.176    0.016    0.145    0.208
 #&gt;    .v2              free       0.207    0.018    0.171    0.242
 #&gt;    .v3              free       0.250    0.021    0.209    0.290
 #&gt;    .v4              free       0.259    0.021    0.217    0.300
@@ -455,12 +455,12 @@ are displayed.</p></td>
 #&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
 #&gt;   help =~                                                      
 #&gt;     h1             fixed       1.000             1.000    1.000
-#&gt;     h2               pen       1.104    0.039    1.027    1.181
+#&gt;     h2               pen       1.103    0.039    1.027    1.180
 #&gt;     h3               pen       0.996    0.040    0.917    1.076
-#&gt;     h4               pen       1.191    0.049    1.096    1.287
-#&gt;     h5               pen       1.106    0.038    1.030    1.181
-#&gt;     h6               pen       1.082    0.052    0.981    1.183
-#&gt;     h7               pen       0.741    0.065    0.613    0.868
+#&gt;     h4               pen       1.196    0.050    1.099    1.294
+#&gt;     h5               pen       1.106    0.038    1.031    1.181
+#&gt;     h6               pen       1.084    0.051    0.984    1.185
+#&gt;     h7               pen       0.742    0.065    0.614    0.870
 #&gt;     v1             fixed       0.000             0.000    0.000
 #&gt;     v2               pen       0.000                           
 #&gt;     v3               pen       0.000                           
@@ -470,10 +470,10 @@ are displayed.</p></td>
 #&gt;     h1             fixed       0.000             0.000    0.000
 #&gt;     h2               pen      -0.000                           
 #&gt;     h3               pen       0.000                           
-#&gt;     h4               pen      -0.033                           
+#&gt;     h4               pen      -0.038                           
 #&gt;     h5               pen       0.000                           
-#&gt;     h6               pen       0.046                           
-#&gt;     h7               pen       0.337    0.056    0.227    0.447
+#&gt;     h6               pen       0.044                           
+#&gt;     h7               pen       0.336    0.056    0.225    0.446
 #&gt;     v1             fixed       1.000             1.000    1.000
 #&gt;     v2               pen       1.015    0.028    0.960    1.070
 #&gt;     v3               pen       0.977    0.029    0.920    1.034
@@ -489,23 +489,23 @@ are displayed.</p></td>
 #&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
 #&gt;    .h1             fixed       0.000             0.000    0.000
 #&gt;    .v1             fixed       0.000             0.000    0.000
-#&gt;    .h2               pen       0.010    0.032   -0.052    0.073
+#&gt;    .h2               pen       0.008    0.032   -0.054    0.070
 #&gt;    .h3               pen      -0.001    0.032   -0.062    0.061
-#&gt;    .h4               pen       0.059    0.036   -0.012    0.130
-#&gt;    .h5               pen      -0.014    0.032   -0.077    0.048
+#&gt;    .h4               pen       0.058    0.036   -0.013    0.129
+#&gt;    .h5               pen      -0.012    0.032   -0.075    0.051
 #&gt;    .h6               pen       0.003    0.029   -0.055    0.060
-#&gt;    .h7               pen      -0.004    0.025   -0.054    0.045
-#&gt;    .v2               pen       0.024    0.027   -0.029    0.076
+#&gt;    .h7               pen      -0.004    0.025   -0.054    0.046
+#&gt;    .v2               pen       0.022    0.027   -0.030    0.075
 #&gt;    .v3               pen      -0.001    0.025   -0.050    0.048
 #&gt;    .v4               pen      -0.001    0.025   -0.050    0.048
-#&gt;    .v5               pen       0.000    0.026   -0.051    0.052
+#&gt;    .v5               pen       0.002    0.026   -0.049    0.053
 #&gt;     help            free      -0.101    0.043   -0.186   -0.017
-#&gt;     voice           free      -0.162    0.045   -0.249   -0.074
+#&gt;     voice           free      -0.161    0.045   -0.249   -0.074
 #&gt; 
 #&gt; Variances:
 #&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
 #&gt;    .h1              free       0.407    0.033    0.343    0.471
-#&gt;    .h2              free       0.267    0.023    0.221    0.312
+#&gt;    .h2              free       0.267    0.023    0.222    0.312
 #&gt;    .h3              free       0.411    0.033    0.346    0.476
 #&gt;    .h4              free       0.240    0.022    0.197    0.283
 #&gt;    .h5              free       0.303    0.026    0.253    0.354
