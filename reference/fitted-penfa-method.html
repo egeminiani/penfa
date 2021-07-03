@@ -179,9 +179,21 @@ according to the item names used in the model syntax.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## --- Continuing the Examples from penfa manual page:</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>utils</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span><span class='op'>(</span><span class='st'>"penfa"</span>, echo <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ccdata</span><span class='op'>)</span>
+
+<span class='va'>syntax</span> <span class='op'>=</span> <span class='st'>'help  =~   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+          voice =~ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'</span>
+
+<span class='va'>alasso_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='penfa.html'>penfa</a></span><span class='op'>(</span><span class='co'>## factor model</span>
+                    model  <span class='op'>=</span> <span class='va'>syntax</span>,
+                    data   <span class='op'>=</span> <span class='va'>ccdata</span>,
+                    std.lv <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                    <span class='co'>## penalization</span>
+                    pen.shrink <span class='op'>=</span> <span class='st'>"alasso"</span>,
+                    eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>,
+                    <span class='co'>## automatic procedure</span>
+                    strategy <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Computing weights for alasso (ML estimates)... done.
 #&gt; 
 #&gt; Automatic procedure: 
@@ -193,26 +205,8 @@ according to the item names used in the model syntax.</p></td>
 #&gt; Eigenvalue range: [180.2917, 9189645]
 #&gt; Trust region iterations: 15 
 #&gt; Factor solution: admissible 
-#&gt; Effective degrees of freedom: 27.12936  
-#&gt; 
-#&gt; Largest absolute gradient value: 0.00108292
-#&gt; Fisher information matrix is positive definite
-#&gt; Eigenvalue range: [2.904073, 76169.99]
-#&gt; Trust region iterations: 22 
-#&gt; Factor solution: admissible 
-#&gt; Computing VCOV ... done.
-#&gt; Effective degrees of freedom: 94  
-#&gt; 
-#&gt; Automatic procedure: 
-#&gt; Iteration  1 : 0.00215674 6115.68152854 0.00300201 
-#&gt; Iteration  2 : 0.00196778 4011.40169767 0.00772393 
-#&gt; 
-#&gt; Largest absolute gradient value: 61.89552041
-#&gt; Fisher information matrix is positive definite
-#&gt; Eigenvalue range: [53.00923, 1.174025e+12]
-#&gt; Trust region iterations: 18 
-#&gt; Factor solution: admissible 
-#&gt; Effective degrees of freedom: 56.75744  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
+#&gt; Effective degrees of freedom: 27.12936  </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; $cov
 #&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5   
 #&gt; h1 0.974                                                                  
@@ -227,51 +221,8 @@ according to the item names used in the model syntax.</p></td>
 #&gt; v3 0.566 0.634 0.573 0.645 0.642 0.665 0.674 0.716 0.734 0.970            
 #&gt; v4 0.566 0.634 0.573 0.646 0.643 0.666 0.674 0.717 0.735 0.710 0.970      
 #&gt; v5 0.541 0.606 0.547 0.617 0.614 0.636 0.644 0.685 0.701 0.678 0.678 0.972
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>alasso_fitMG</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $LEB
-#&gt; $LEB$cov
-#&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5   
-#&gt; h1 1.135                                                                  
-#&gt; h2 0.831 1.130                                                            
-#&gt; h3 0.750 0.828 1.092                                                      
-#&gt; h4 0.872 0.963 0.869 1.137                                                
-#&gt; h5 0.833 0.919 0.830 0.965 1.083                                          
-#&gt; h6 0.850 0.938 0.847 0.985 0.940 1.124                                    
-#&gt; h7 0.814 0.898 0.811 0.941 0.900 0.920 1.105                              
-#&gt; v1 0.759 0.838 0.756 0.874 0.840 0.863 0.869 1.088                        
-#&gt; v2 0.771 0.850 0.768 0.887 0.852 0.876 0.882 0.925 1.145                  
-#&gt; v3 0.742 0.819 0.739 0.854 0.820 0.844 0.849 0.890 0.904 1.120            
-#&gt; v4 0.742 0.818 0.739 0.854 0.820 0.844 0.849 0.890 0.904 0.870 1.128      
-#&gt; v5 0.708 0.781 0.705 0.815 0.783 0.805 0.810 0.849 0.862 0.830 0.830 1.082
-#&gt; 
-#&gt; $LEB$mean
-#&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5 
-#&gt; 0.092 0.090 0.091 0.047 0.126 0.109 0.114 0.148 0.128 0.144 0.144 0.142 
-#&gt; 
-#&gt; 
-#&gt; $TAIW
-#&gt; $TAIW$cov
-#&gt;    h1    h2    h3    h4    h5    h6    h7    v1    v2    v3    v4    v5   
-#&gt; h1 0.868                                                                  
-#&gt; h2 0.509 0.828                                                            
-#&gt; h3 0.459 0.507 0.869                                                      
-#&gt; h4 0.535 0.591 0.533 0.862                                                
-#&gt; h5 0.510 0.562 0.508 0.592 0.867                                          
-#&gt; h6 0.519 0.572 0.517 0.602 0.574 0.821                                    
-#&gt; h7 0.486 0.536 0.484 0.562 0.537 0.549 0.851                              
-#&gt; v1 0.428 0.472 0.427 0.491 0.473 0.489 0.508 0.887                        
-#&gt; v2 0.435 0.480 0.433 0.498 0.481 0.497 0.516 0.577 0.794                  
-#&gt; v3 0.418 0.462 0.417 0.480 0.463 0.478 0.497 0.555 0.564 0.815            
-#&gt; v4 0.418 0.462 0.417 0.479 0.462 0.478 0.497 0.555 0.564 0.543 0.803      
-#&gt; v5 0.399 0.440 0.398 0.457 0.441 0.456 0.474 0.530 0.538 0.518 0.518 0.855
-#&gt; 
-#&gt; $TAIW$mean
-#&gt;     h1     h2     h3     h4     h5     h6     h7     v1     v2     v3     v4 
-#&gt; -0.101 -0.103 -0.101 -0.057 -0.124 -0.114 -0.133 -0.161 -0.142 -0.159 -0.158 
-#&gt;     v5 
-#&gt; -0.149 
-#&gt; 
 #&gt; </div><div class='input'>
+
 
 </div></pre>
   </div>

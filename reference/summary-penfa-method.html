@@ -218,9 +218,20 @@ are displayed.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## --- Continuing the Examples from penfa manual page:</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'>utils</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span><span class='op'>(</span><span class='st'>"penfa"</span>, echo <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>ccdata</span><span class='op'>)</span>
+
+<span class='va'>syntax</span> <span class='op'>=</span> <span class='st'>'help  =~   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+          voice =~ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'</span>
+
+<span class='va'>alasso_fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='penfa.html'>penfa</a></span><span class='op'>(</span><span class='co'>## factor model</span>
+                    model  <span class='op'>=</span> <span class='va'>syntax</span>,
+                    data   <span class='op'>=</span> <span class='va'>ccdata</span>,
+                    std.lv <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                    <span class='co'>## penalization</span>
+                    pen.shrink <span class='op'>=</span> <span class='st'>"alasso"</span>,
+                    eta <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>shrink <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lambda"</span> <span class='op'>=</span> <span class='fl'>0.01</span><span class='op'>)</span>, diff <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span> <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>,
+                    <span class='co'>## automatic procedure</span>
+                    strategy <span class='op'>=</span> <span class='st'>"auto"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Computing weights for alasso (ML estimates)... done.
 #&gt; 
 #&gt; Automatic procedure: 
@@ -232,26 +243,8 @@ are displayed.</p></td>
 #&gt; Eigenvalue range: [180.2917, 9189645]
 #&gt; Trust region iterations: 15 
 #&gt; Factor solution: admissible 
-#&gt; Effective degrees of freedom: 27.12936  
-#&gt; 
-#&gt; Largest absolute gradient value: 0.00108292
-#&gt; Fisher information matrix is positive definite
-#&gt; Eigenvalue range: [2.904073, 76169.99]
-#&gt; Trust region iterations: 22 
-#&gt; Factor solution: admissible 
-#&gt; Computing VCOV ... done.
-#&gt; Effective degrees of freedom: 94  
-#&gt; 
-#&gt; Automatic procedure: 
-#&gt; Iteration  1 : 0.00215674 6115.68152854 0.00300201 
-#&gt; Iteration  2 : 0.00196778 4011.40169767 0.00772393 
-#&gt; 
-#&gt; Largest absolute gradient value: 61.89552041
-#&gt; Fisher information matrix is positive definite
-#&gt; Eigenvalue range: [53.00923, 1.174025e+12]
-#&gt; Trust region iterations: 18 
-#&gt; Factor solution: admissible 
-#&gt; Effective degrees of freedom: 56.75744  </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
+#&gt; Effective degrees of freedom: 27.12936  </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>alasso_fit</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; penfa 0.0.0.9000 reached convergence
 #&gt; 
 #&gt;   Number of observations                                    767
@@ -336,189 +329,8 @@ are displayed.</p></td>
 #&gt;    .v5              free       0.324    0.019    0.287    0.361
 #&gt;     help           fixed       1.000             1.000    1.000
 #&gt;     voice          fixed       1.000             1.000    1.000
-#&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>alasso_fitMG</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; penfa 0.0.0.9000 reached convergence
-#&gt; 
-#&gt;   Number of observations per group:                            
-#&gt;     LEB                                                     402
-#&gt;     TAIW                                                    365
-#&gt;   Number of groups                                            2
-#&gt;   Number of observed variables                               12
-#&gt;   Number of latent factors                                    2
-#&gt;                                                                
-#&gt;   Estimator                                                PMLE
-#&gt;   Optimization method                              trust-region
-#&gt;   Information                                            fisher
-#&gt;   Strategy                                                 auto
-#&gt;   Number of iterations (total)                              150
-#&gt;   Number of two-steps (automatic)                             2
-#&gt;   Influence factor                                            4
-#&gt;   Number of parameters:                                        
-#&gt;     Free                                                     34
-#&gt;     Penalized                                                60
-#&gt;   Effective degrees of freedom                           56.757
-#&gt;   GIC                                                 17096.169
-#&gt;   GBIC                                                17359.665
-#&gt;                                                                
-#&gt;   Penalty functions:                                           
-#&gt;     Sparsity                                             alasso
-#&gt;     Invariance                                           alasso
-#&gt;                                                                
-#&gt;   Additional tuning parameter                                  
-#&gt;     alasso                                                    1
-#&gt;                                                                
-#&gt;   Optimal tuning parameters:                                   
-#&gt;     Sparsity                                                   
-#&gt;      - Factor loadings                                    0.002
-#&gt;     Invariance                                                 
-#&gt;      - Factor loadings                                 4011.402
-#&gt;      - Intercepts                                         0.008
-#&gt;                                                                
-#&gt; 
-#&gt; Parameter Estimates:
-#&gt; 
-#&gt; 
-#&gt; Group 1 [LEB]:
-#&gt; 
-#&gt; Latent Variables:
-#&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
-#&gt;   help =~                                                      
-#&gt;     h1             fixed       1.000             1.000    1.000
-#&gt;     h2               pen       1.103    0.039    1.027    1.180
-#&gt;     h3               pen       0.996    0.040    0.917    1.076
-#&gt;     h4               pen       1.196    0.050    1.099    1.294
-#&gt;     h5               pen       1.106    0.038    1.031    1.181
-#&gt;     h6               pen       1.084    0.051    0.984    1.185
-#&gt;     h7               pen       0.742    0.065    0.614    0.870
-#&gt;     v1             fixed       0.000             0.000    0.000
-#&gt;     v2               pen       0.000                           
-#&gt;     v3               pen       0.000                           
-#&gt;     v4               pen       0.000                           
-#&gt;     v5               pen      -0.000                           
-#&gt;   voice =~                                                     
-#&gt;     h1             fixed       0.000             0.000    0.000
-#&gt;     h2               pen       0.000                           
-#&gt;     h3               pen      -0.000                           
-#&gt;     h4               pen      -0.038                           
-#&gt;     h5               pen       0.000                           
-#&gt;     h6               pen       0.044                           
-#&gt;     h7               pen       0.336    0.056    0.225    0.446
-#&gt;     v1             fixed       1.000             1.000    1.000
-#&gt;     v2               pen       1.015    0.028    0.960    1.070
-#&gt;     v3               pen       0.977    0.029    0.920    1.034
-#&gt;     v4               pen       0.977    0.029    0.920    1.034
-#&gt;     v5               pen       0.932    0.030    0.873    0.991
-#&gt; 
-#&gt; Covariances:
-#&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
-#&gt;   help ~~                                                      
-#&gt;     voice           free       0.759    0.062    0.637    0.882
-#&gt; 
-#&gt; Intercepts:
-#&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
-#&gt;    .h1             fixed       0.000             0.000    0.000
-#&gt;    .v1             fixed       0.000             0.000    0.000
-#&gt;    .h2               pen      -0.012    0.031   -0.073    0.049
-#&gt;    .h3               pen      -0.001    0.032   -0.062    0.061
-#&gt;    .h4               pen      -0.058    0.033   -0.122    0.007
-#&gt;    .h5               pen       0.024    0.031   -0.037    0.084
-#&gt;    .h6               pen       0.003    0.029   -0.055    0.060
-#&gt;    .h7               pen      -0.004    0.025   -0.054    0.045
-#&gt;    .v2               pen      -0.022    0.026   -0.072    0.029
-#&gt;    .v3               pen      -0.001    0.025   -0.050    0.048
-#&gt;    .v4               pen      -0.001    0.025   -0.050    0.048
-#&gt;    .v5               pen       0.004    0.026   -0.047    0.055
-#&gt;     help            free       0.092    0.049   -0.005    0.189
-#&gt;     voice           free       0.148    0.051    0.048    0.248
-#&gt; 
-#&gt; Variances:
-#&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
-#&gt;    .h1              free       0.382    0.029    0.326    0.438
-#&gt;    .h2              free       0.213    0.017    0.180    0.247
-#&gt;    .h3              free       0.344    0.026    0.293    0.395
-#&gt;    .h4              free       0.126    0.012    0.103    0.150
-#&gt;    .h5              free       0.162    0.014    0.135    0.189
-#&gt;    .h6              free       0.164    0.014    0.137    0.191
-#&gt;    .h7              free       0.210    0.016    0.178    0.241
-#&gt;    .v1              free       0.176    0.016    0.145    0.208
-#&gt;    .v2              free       0.207    0.018    0.171    0.242
-#&gt;    .v3              free       0.250    0.021    0.209    0.290
-#&gt;    .v4              free       0.259    0.021    0.217    0.300
-#&gt;    .v5              free       0.290    0.023    0.245    0.335
-#&gt;     help            free       0.753    0.069    0.617    0.889
-#&gt;     voice           free       0.911    0.074    0.766    1.056
-#&gt; 
-#&gt; 
-#&gt; Group 2 [TAIW]:
-#&gt; 
-#&gt; Latent Variables:
-#&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
-#&gt;   help =~                                                      
-#&gt;     h1             fixed       1.000             1.000    1.000
-#&gt;     h2               pen       1.103    0.039    1.027    1.180
-#&gt;     h3               pen       0.996    0.040    0.917    1.076
-#&gt;     h4               pen       1.196    0.050    1.099    1.294
-#&gt;     h5               pen       1.106    0.038    1.031    1.181
-#&gt;     h6               pen       1.084    0.051    0.984    1.185
-#&gt;     h7               pen       0.742    0.065    0.614    0.870
-#&gt;     v1             fixed       0.000             0.000    0.000
-#&gt;     v2               pen       0.000                           
-#&gt;     v3               pen       0.000                           
-#&gt;     v4               pen       0.000                           
-#&gt;     v5               pen      -0.000                           
-#&gt;   voice =~                                                     
-#&gt;     h1             fixed       0.000             0.000    0.000
-#&gt;     h2               pen      -0.000                           
-#&gt;     h3               pen       0.000                           
-#&gt;     h4               pen      -0.038                           
-#&gt;     h5               pen       0.000                           
-#&gt;     h6               pen       0.044                           
-#&gt;     h7               pen       0.336    0.056    0.225    0.446
-#&gt;     v1             fixed       1.000             1.000    1.000
-#&gt;     v2               pen       1.015    0.028    0.960    1.070
-#&gt;     v3               pen       0.977    0.029    0.920    1.034
-#&gt;     v4               pen       0.977    0.029    0.920    1.034
-#&gt;     v5               pen       0.932    0.030    0.873    0.991
-#&gt; 
-#&gt; Covariances:
-#&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
-#&gt;   help ~~                                                      
-#&gt;     voice           free       0.428    0.039    0.351    0.505
-#&gt; 
-#&gt; Intercepts:
-#&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
-#&gt;    .h1             fixed       0.000             0.000    0.000
-#&gt;    .v1             fixed       0.000             0.000    0.000
-#&gt;    .h2               pen       0.008    0.032   -0.054    0.070
-#&gt;    .h3               pen      -0.001    0.032   -0.062    0.061
-#&gt;    .h4               pen       0.058    0.036   -0.013    0.129
-#&gt;    .h5               pen      -0.012    0.032   -0.075    0.051
-#&gt;    .h6               pen       0.003    0.029   -0.055    0.060
-#&gt;    .h7               pen      -0.004    0.025   -0.054    0.046
-#&gt;    .v2               pen       0.022    0.027   -0.030    0.075
-#&gt;    .v3               pen      -0.001    0.025   -0.050    0.048
-#&gt;    .v4               pen      -0.001    0.025   -0.050    0.048
-#&gt;    .v5               pen       0.002    0.026   -0.049    0.053
-#&gt;     help            free      -0.101    0.043   -0.186   -0.017
-#&gt;     voice           free      -0.161    0.045   -0.249   -0.074
-#&gt; 
-#&gt; Variances:
-#&gt;                     Type    Estimate  Std.Err     2.5%    97.5%
-#&gt;    .h1              free       0.407    0.033    0.343    0.471
-#&gt;    .h2              free       0.267    0.023    0.222    0.312
-#&gt;    .h3              free       0.411    0.033    0.346    0.476
-#&gt;    .h4              free       0.240    0.022    0.197    0.283
-#&gt;    .h5              free       0.303    0.026    0.253    0.354
-#&gt;    .h6              free       0.237    0.021    0.196    0.278
-#&gt;    .h7              free       0.321    0.026    0.270    0.371
-#&gt;    .v1              free       0.318    0.027    0.265    0.372
-#&gt;    .v2              free       0.208    0.020    0.169    0.247
-#&gt;    .v3              free       0.272    0.024    0.225    0.319
-#&gt;    .v4              free       0.261    0.023    0.215    0.306
-#&gt;    .v5              free       0.361    0.030    0.302    0.419
-#&gt;     help            free       0.461    0.045    0.373    0.549
-#&gt;     voice           free       0.568    0.051    0.469    0.668
 #&gt; </div><div class='input'>
+
 
 </div></pre>
   </div>
