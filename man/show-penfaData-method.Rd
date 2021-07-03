@@ -15,15 +15,6 @@ An S4 method showing information on the input data, including the number of
 observations. In case of a multiple-group analysis, the sample sizes for each
 group are displayed.
 }
-\examples{
-
-## --- Continuing the Examples from penfa manual page:
-\dontshow{require(utils)
-example("penfa", echo = FALSE)}
-alasso_fit@Data
-alasso_fitMG@Data
-
-}
 \seealso{
 \code{\link{penfaData-class}}
 }

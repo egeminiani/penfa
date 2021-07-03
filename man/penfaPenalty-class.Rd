@@ -74,7 +74,9 @@ alasso_fit <- penfa(## factor model
                     eta = list(shrink = c("lambda" = 0.01), diff = c("none" = 0)),
                     ## automatic procedure
                     strategy = "auto")
+
 alasso_fit@Penalize
+
 str(alasso_fit@Penalize)
 
 }

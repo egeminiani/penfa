@@ -16,16 +16,6 @@ the optimization method, the specified penalty functions, the convergence
 status, the number of iterations, the tuning selection strategy, and the
 effective degrees of freedom.
 }
-\examples{
-
-## --- Continuing the Examples from penfa manual page:
-\dontshow{require(utils)
-example("penfa", echo = FALSE)}
-alasso_fit
-alasso_fitMG
-
-
-}
 \seealso{
 \code{\link{penfa}}, \code{\link{penfa-class}}
 }

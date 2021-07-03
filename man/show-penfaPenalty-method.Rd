@@ -18,16 +18,6 @@ parameter selection strategy. If the automatic procedure was used, the output
 would also show the value of the influence factor, and the number of two-steps
 iterations.
 }
-\examples{
-
-## --- Continuing the Examples from penfa manual page:
-\dontshow{require(utils)
-example("penfa", echo = FALSE)}
-alasso_fit@Penalize
-alasso_fitMG@Penalize
-
-
-}
 \seealso{
 \code{\link{penfaPenalty-class}}
 }

@@ -43,10 +43,24 @@
 #'
 #' @examples
 #'
-#' ## --- Continuing the Examples from penfa manual page:
-#' \dontshow{require(utils)
-#' example("penfa", echo = FALSE)}
+#'
+#' data(ccdata)
+#'
+#' syntax = 'help  =~   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+#'           voice =~ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
+#'
+#' alasso_fit <- penfa(## factor model
+#'                     model  = syntax,
+#'                     data   = ccdata,
+#'                     std.lv = TRUE,
+#'                     ## penalization
+#'                     pen.shrink = "alasso",
+#'                     eta = list(shrink = c("lambda" = 0.01), diff = c("none" = 0)),
+#'                     ## automatic procedure
+#'                     strategy = "auto")
+#'
 #' coef(alasso_fit)
+#'
 #'
 #'
 #'
@@ -74,13 +88,6 @@ setMethod("coef", "penfa",
 #' @seealso \code{\link{penfa}}, \code{\link{penfa-class}}
 #'
 #'
-#' @examples
-#'
-#' ## --- Continuing the Examples from penfa manual page:
-#' \dontshow{require(utils)
-#' example("penfa", echo = FALSE)}
-#' alasso_fit
-#' alasso_fitMG
 #'
 #'
 #' @export
@@ -123,11 +130,23 @@ setMethod("show", "penfa",
 #'
 #' @examples
 #'
-#' ## --- Continuing the Examples from penfa manual page:
-#' \dontshow{require(utils)
-#' example("penfa", echo = FALSE)}
+#' data(ccdata)
+#'
+#' syntax = 'help  =~   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+#'           voice =~ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
+#'
+#' alasso_fit <- penfa(## factor model
+#'                     model  = syntax,
+#'                     data   = ccdata,
+#'                     std.lv = TRUE,
+#'                     ## penalization
+#'                     pen.shrink = "alasso",
+#'                     eta = list(shrink = c("lambda" = 0.01), diff = c("none" = 0)),
+#'                     ## automatic procedure
+#'                     strategy = "auto")
+#'
 #' summary(alasso_fit)
-#' summary(alasso_fitMG)
+#'
 #'
 #'
 #' @export
@@ -177,11 +196,24 @@ setMethod("summary", "penfa",
 #'
 #' @examples
 #'
-#' ## --- Continuing the Examples from penfa manual page:
-#' \dontshow{require(utils)
-#' example("penfa", echo = FALSE)}
+#'
+#' data(ccdata)
+#'
+#' syntax = 'help  =~   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+#'           voice =~ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
+#'
+#' alasso_fit <- penfa(## factor model
+#'                     model  = syntax,
+#'                     data   = ccdata,
+#'                     std.lv = TRUE,
+#'                     ## penalization
+#'                     pen.shrink = "alasso",
+#'                     eta = list(shrink = c("lambda" = 0.01), diff = c("none" = 0)),
+#'                     ## automatic procedure
+#'                     strategy = "auto")
+#'
 #' fitted(alasso_fit)
-#' fitted(alasso_fitMG)
+#'
 #'
 #'
 #' @export
@@ -206,13 +238,6 @@ setMethod("fitted", "penfa",
 #' @seealso \code{\link{penfaData-class}}
 #'
 #'
-#' @examples
-#'
-#' ## --- Continuing the Examples from penfa manual page:
-#' \dontshow{require(utils)
-#' example("penfa", echo = FALSE)}
-#' alasso_fit@Data
-#' alasso_fitMG@Data
 #'
 #' @export
 setMethod("show", "penfaData",
@@ -236,13 +261,6 @@ setMethod("show", "penfaData",
 #' @seealso \code{\link{penfaPenalty-class}}
 #'
 #'
-#' @examples
-#'
-#' ## --- Continuing the Examples from penfa manual page:
-#' \dontshow{require(utils)
-#' example("penfa", echo = FALSE)}
-#' alasso_fit@Penalize
-#' alasso_fitMG@Penalize
 #'
 #'
 #' @export

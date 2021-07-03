@@ -533,7 +533,8 @@
 #'                     ## automatic procedure
 #'                     strategy = "auto",
 #'                     gamma = 4)
-#' alasso_fit
+#'
+#'
 #'
 #' ### Multiple-group analysis (mean structure, marker-variable approach, starting values)
 #' syntax_mg = '
@@ -570,7 +571,7 @@
 #'                       gamma = 4,
 #'                       ## alasso
 #'                       weights = mle_weightsMG)
-#' alasso_fitMG
+#'
 #'
 penfa <- function(model      = NULL,
                   data       = NULL,
