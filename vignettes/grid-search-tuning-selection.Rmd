@@ -146,20 +146,21 @@ penfa.fixedTun <- function(eta, penalty, ...){
 GBIC.scad <- sapply(eta.grid, penfa.fixedTun, penalty = "scad") 
 ```
 
-We can plot `GBIC` values across the tuning values. 
+The optimal tuning parameter is the one generating the penalized model with the
+lowest `GBIC`.
 
 ```{r scad_plot, fig.height=4, fig.width=6, message=FALSE, warning=FALSE}
 optimtun.scad <- eta.grid[[which.min(GBIC.scad)]]
-  
-p <- plotly::plot_ly(x = eta.grid, y = GBIC.scad, type = 'scatter', mode = 'lines')
-plotly::layout(p, xaxis = list(showline = TRUE),
-               title = list(text = "GBIC values across tuning parameters"))
+
+# To plot GBIC across tuning values
+# p <- plotly::plot_ly(x = eta.grid, y = GBIC.scad, type = 'scatter', mode = 'lines')
+# plotly::layout(p, xaxis = list(showline = TRUE),
+#               title = list(text = "GBIC values across tuning parameters"))
 ```
 
 
-We can ultimately fit the model with the optimal tuning parameter (here, `r optimtun.scad`), 
-that is, the one generating the penalized model with the lowest GBIC. The 
-`summary` method details information on the model characteristics, the
+We can ultimately fit the model with the optimal tuning parameter (here, `r optimtun.scad`). 
+The `summary` method details information on the model characteristics, the
 optimization and penalization procedures as well as the parameter estimates with
 associated standard errors and confidence intervals. The *Type* column
 distinguishes between the *fixed* parameters set to specific values for
@@ -188,7 +189,7 @@ summary(scad.fit)
 ```
 
 The penalty matrix can be inspected and plotted as shown in
-`vignette("automatic-tuning-selection")`.
+["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/plotting-penalty-matrix.html).
 
 #### Implied moments
 
@@ -220,9 +221,7 @@ additional details on the possible options.
 GBIC.mcp <- sapply(eta.grid, penfa.fixedTun, penalty = "mcp")
 
 optimtun.mcp <- eta.grid[[which.min(GBIC.mcp)]]
-q <- plotly::plot_ly(x = eta.grid, y = GBIC.mcp, type = 'scatter', mode = 'lines')
-plotly::layout(q,  xaxis = list(showline = TRUE),
-               title = list(text = "GBIC values across tuning parameters"))
+optimtun.mcp
 ```
 
 The tuning value equal to `r optimtun.mcp` generated the model with the lowest GBIC.

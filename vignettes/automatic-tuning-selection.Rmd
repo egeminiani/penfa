@@ -304,15 +304,9 @@ diag(alasso_penmat)
 print(formatC(diag(alasso_penmat), digits = 2, format = "f"), quote = FALSE)
 ```
 
-Applying the `plot` method to the penalty matrix allows to visualize an
-interactive heatmap of the log of the absolute value of the estimated penalty
-matrix. Due to space constraints, it may occur that some of the parameter labels
-on the axes are hidden. If it is the case, users can zoom in on the area of
-interest and inspect the corresponding penalty values.
 
-```{r plotly_heatmap, fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
-plot(alasso_penmat)
-```
+See ["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/plotting-penalty-matrix.html) for details on how to produce an interactive plot of the 
+penalty matrix.
 
 
 #### Factor scores

@@ -32,8 +32,8 @@ version](https://img.shields.io/badge/GitHub-0.0.0.9000-orange.svg?style=flat-sq
 
 An R package for estimating single- and multiple-group penalized factor models
 via a trust-region algorithm with integrated automatic multiple tuning parameter
-selection. Supported penalties include lasso, adaptive lasso, scad, mcp, and
-ridge.
+selection (Geminiani et al., 2021). Supported penalties include lasso, adaptive
+lasso, scad, mcp, and ridge.
 
 ### Installation
 
@@ -102,6 +102,9 @@ multiple-group penalized factor model with the alasso penalty. This model
 encourages sparsity in the loading matrices and cross-group invariance of
 loadings and intercepts. The automatic multiple tuning parameter procedure is
 employed for finding the optimal tuning parameter vector.
+
+* See ["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/plotting-penalty-matrix.html) for details on how to produce interactive plots of the  
+penalty matrices.
 
 
 ### Literature

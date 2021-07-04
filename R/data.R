@@ -9,7 +9,7 @@
 #'   behavior. Employees from different countries were asked to rate their
 #'   attitudes towards helping other employees and giving suggestions for
 #'   improved work conditions. The items are thought to measure two latent
-#'   factors: **helping** behavior (first seven items) and **voice** behavior
+#'   factors: helping behavior (first seven items) and voice behavior
 #'   (last five items). See below for details.
 #'
 #' @details The original data come from the
@@ -25,32 +25,32 @@
 #'   \item{country}{Character. Country of origin of the employee: Lebanon
 #'   ("LEB") or Taiwan ("TAIW").}
 #'   \item{h1}{Numeric. Standardized ratings to the item "*I volunteer to do
-#'   things for this organization*".}
+#'   things for this organization*."}
 #'   \item{h2}{Numeric.  Standardized ratings to the item "*I help orient new
-#'   employees in this organization*".}
+#'   employees in this organization*."}
 #'   \item{h3}{Numeric. Standardized ratings to the item "*I attend functions
-#'   that help this organization*".}
+#'   that help this organization*."}
 #'   \item{h4}{Numeric. Standardized ratings to the item "*I help others in
-#'   this work group with their work for the benefit of the group*".}
+#'   this work group with their work for the benefit of the group*."}
 #'   \item{h5}{Numeric. Standardized ratings to the item "*I get involved to
-#'   benefit this organization*".}
+#'   benefit this organization*."}
 #'   \item{h6}{Numeric. Standardized ratings to the item "*I help others in this
-#'   organization learn about the work*".}
+#'   organization learn about the work*."}
 #'   \item{h7}{Numeric. Standardized ratings to the item "*I help others in this
-#'   organization with their work responsibilities*".}
+#'   organization with their work responsibilities*."}
 #'   \item{v1}{Numeric. Standardized ratings to the item "*I develop and make
-#'   recommendations concerning issues that affect this organization*".}
+#'   recommendations concerning issues that affect this organization*."}
 #'   \item{v2}{Numeric. Standardized ratings to the item "*I speak up
 #'   and encourage other in this organization to get involved in issues that
-#'   affect the group*".}
+#'   affect the group*."}
 #'   \item{v3}{Numeric. Standardized ratings to the item "*I
 #'   communicate my opinions about work issues to others in this organization
 #'   even if my opinion is different and others in the organization disagree
-#'   with me*".}
+#'   with me*."}
 #'   \item{v4}{Numeric. Standardized ratings to the item "*I keep well informed
-#'   about issues where my opinion might be useful to this organization*".}
+#'   about issues where my opinion might be useful to this organization*."}
 #'   \item{v5}{Numeric. Standardized ratings to the item "*I speak up in
-#'   this organization with ideas for new projects or changes in procedures*".}
+#'   this organization with ideas for new projects or changes in procedures*."}
 #'   }
 #'
 #'

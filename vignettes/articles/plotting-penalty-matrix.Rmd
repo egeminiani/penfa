@@ -1,0 +1,246 @@
+---
+title: "Plotting Penalty Matrices"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting Penalty Matrices}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{css, echo=FALSE}
+pre {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+pre[class] {
+  max-height: 600px;
+}
+```
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+options(width = 100)
+```
+
+## Introduction
+
+**Aim**. This vignette shows how to plot the penalty matrices from the single-
+and multiple-group penalized factor models estimated in 
+`vignette("automatic-tuning-selection")` and `vignette("multiple-group-analysis")`.
+
+**Data**. For illustration purposes, we use the cross-cultural data set `ccdata`
+containing the standardized ratings to 12 items concerning organizational
+citizenship behavior. Employees from different countries were asked to rate
+their attitudes towards helping other employees and giving suggestions for
+improved work conditions. The items are thought to measure two latent factors:
+**help**, defined by the first seven items (`h1` to `h7`), and **voice**,
+represented by the last five items (`v1` to `v5`). See `?ccdata` for details.
+
+This data set is a standardized version of the one in the
+[`ccpsyc`](https://github.com/Jo-Karl/ccpsyc/) package, and only considers
+employees from Lebanon and Taiwan (i.e., `"LEB"`, `"TAIW"`). 
+This vignette is meant as a demo of the capabilities of `penfa`; please refer to 
+Fischer et al. (2019) and Fischer and Karl (2019) for a description and
+analysis of these data.
+
+
+Let us load and inspect `ccdata`.
+
+```{r dataset}
+library(penfa)
+data(ccdata)
+
+summary(ccdata)
+```
+
+
+## Penalized factor analysis
+
+Let us fit the penalized factor model with alasso and automatic tuning procedure 
+as described in `vignette("automatic-tuning-selection")`.
+
+```{r model_fit}
+# Specify syntax
+syntax = 'help  =~   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+          voice =~ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'
+
+# Get adaptive weights
+mle.fit <- penfa(## factor model 
+                 model = syntax, 
+                 data  = ccdata,
+                 std.lv = TRUE,
+                 ## (no) penalization
+                 pen.shrink = "none",
+                 eta = list(shrink = c("none" = 0), diff = c("none" = 0)),
+                 strategy = "fixed",
+                 verbose = FALSE)
+mle.weights <- coef(mle.fit)
+
+
+# Model fit
+alasso.fit <- penfa(## factor model
+                    model  = syntax,
+                    data   = ccdata,
+                    std.lv = TRUE,
+                    ## penalization
+                    pen.shrink = "alasso",
+                    eta = list(shrink = c("lambda" = 0.01), diff = c("none" = 0)),
+                    ## automatic procedure
+                    strategy = "auto",
+                    gamma = 4,
+                    ## alasso
+                    weights = mle.weights,
+                    verbose = FALSE)
+alasso.fit
+```
+
+The penalty matrix can be extracted through the `penmat` function.
+
+```{r}
+alasso_penmat <- penmat(alasso.fit)
+```
+
+
+Applying the `plot` method to the penalty matrix allows us to visualize an
+interactive heatmap of the log of the absolute value of the estimated penalty
+matrix. Due to space constraints, it may occur that some of the parameter labels
+on the axes are hidden. If it is the case, users can zoom in on the area of
+interest and inspect the corresponding penalty values.
+
+```{r plotly_heatmap, fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+plot(alasso_penmat)
+```
+
+
+
+## Penalized Multiple-Group Factor Analysis
+
+Let us fit the penalized multiple-group factor model with alasso and automatic 
+multiple tuning procedure as described in `vignette("multiple-group-analysis")`.
+
+
+```{r}
+# Specify syntax
+syntax.mg = 'help  =~ 1*h1 +          h2 +          h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
+             voice =~ 0*h1 + start(0)*h2 + start(0)*h3 + h4 + h5 + h6 + h7 + 1*v1 + v2 + v3 + v4 + v5
+             
+             h2 + h3 + h4 + h5 + h6 + h7 + v2 + v3 + v4 + v5 ~ 1 
+             help  ~ NA*1
+             voice ~ NA*1 '
+
+
+# Get adaptive weights
+mle.fitMG <- penfa(## factor model
+                   model = syntax.mg,
+                   data  = ccdata,
+                   group = "country",
+                   ## (no) penalization
+                   pen.shrink = "none",
+                   pen.diff = "none",
+                   eta = list(shrink = c("lambda" = 0), diff = c("none" = 0)),
+                   strategy = "fixed",
+                   verbose = FALSE) 
+mle.weightsMG <- coef(mle.fitMG)
+
+# Model fit
+alasso.fitMG <- penfa(## factor model
+                      model = syntax.mg,
+                      data = ccdata,
+                      group = "country",
+                      int.lv.free = TRUE,
+                      ## penalization
+                      pen.shrink = "alasso",
+                      pen.diff = "alasso",
+                      eta = list(shrink = c("lambda" = 0.01),
+                                 diff   = c("lambda" = 0.1, "tau" = 0.01)),
+                      ## automatic procedure
+                      strategy = "auto",
+                      gamma = 4,
+                      ## alasso
+                      weights = mle.weightsMG)
+
+```
+
+
+The complete penalty matrix is stored in `alasso.fit@Penalize@Sh.info$S.h`, but
+it can be easily extracted via the `penmat` function. This matrix is the sum of
+the penalty matrices for Penalty 1 (`sparsity.penmat`), Penalty 2
+(`loadinvariance.penmat`), and Penalty 3 (`intinvariance.penmat`). Unique
+variances, factor (co)variances and factor means were not affected by the
+penalization, so their entries in the penalty matrices are equal to zero.
+
+Through the `plot` method, we can visualize an interactive heatmap of the log of
+the absolute value of each estimated penalty matrix (because of the wide element
+range). Due to space constraints given by the large number of parameters, some
+parameter labels on the axes may be hidden. In this case, users can zoom in on
+the area of interest and inspect the penalty values for the parameters of
+interest.
+
+```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+full.penmat <- penmat(alasso.fitMG)
+plot(full.penmat)
+```
+
+The above penalty matrix is the sum of the following three individuals penalty
+matrices.
+
+#### Sparsity
+
+This penalty matrix shrinks the small factor loadings of each group to zero.
+Apart from the group loadings, all the remaining entries of the penalty matrix
+are equal to zero.
+
+```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+sparsity.penmat <- penmat(alasso.fitMG, type = "shrink", which = "lambda")
+plot(sparsity.penmat)
+```
+
+#### Loading invariance
+
+This penalty matrix shrinks the pairwise group differences of the factor
+loadings to zero.
+
+```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
+loadinvariance.penmat <- penmat(alasso.fitMG, type = "diff", which = "lambda")
+plot(loadinvariance.penmat)
+```
+
+#### Intercept invariance
+
+This penalty matrix shrinks the pairwise group differences of the intercepts to
+zero.
+
+```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+intinvariance.penmat <- penmat(alasso.fitMG, type = "diff", which = "tau")
+plot(intinvariance.penmat)
+```
+
+
+## R Session
+
+```{r}
+sessionInfo()
+```
+
+
+
+## References
+
+* Fischer, R., Ferreira, M. C., Van Meurs, N. et al. (2019). "Does
+Organizational Formalization Facilitate Voice and Helping Organizational
+Citizenship Behaviors? It Depends on (National) Uncertainty Norms." Journal of
+International Business Studies, 50(1), 125-134.
+[https://doi.org/10.1057/s41267-017-0132-6](https://doi.org/10.1057/s41267-017-0132-6)
+
+* Fischer, R., & Karl, J. A. (2019). "A Primer to (Cross-Cultural) Multi-Group 
+Invariance Testing Possibilities in R." Frontiers in psychology, 10, 1507. [https://doi.org/10.3389/fpsyg.2019.01507](https://doi.org/10.3389/fpsyg.2019.01507)
+
+* Geminiani, E. (2020). "A Penalized Likelihood-Based Framework for Single and
+Multiple-Group Factor Analysis Models." PhD thesis, University of Bologna.
+[http://amsdottorato.unibo.it/9355/](http://amsdottorato.unibo.it/9355/)
+
+* Geminiani, E., Marra, G., & Moustaki, I. (2021). "Single- and Multiple-Group
+Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated
+Automatic Multiple Tuning Parameter Selection." Psychometrika, 86(1), 65-95. [https://doi.org/10.1007/s11336-021-09751-8](https://doi.org/10.1007/s11336-021-09751-8)

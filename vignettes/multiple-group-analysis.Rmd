@@ -190,7 +190,7 @@ penfaOut(alasso.fitMG, which = c("lambda", "tau"))
 
 ### Effective degrees of freedom
 
-The number of *edf* of this penalized model is `r round(alasso.fitMG@Inference$edf, 2)``, 
+The number of *edf* of this penalized model is `r round(alasso.fitMG@Inference$edf, 2)`, 
 which is a fractional number, and is the sum of the contributions from the *edf*
 of each model parameter. Each **edf** quantifies the impact of the three
 penalties on each parameter. Parameters unaffected by the penalization have an
@@ -223,16 +223,8 @@ the penalty matrices for Penalty 1 (`sparsity.penmat`), Penalty 2
 variances, factor (co)variances and factor means were not affected by the
 penalization, so their entries in the penalty matrices are equal to zero.
 
-Through the `plot` method, we can visualize an interactive heatmap of the log of
-the absolute value of each estimated penalty matrix (because of the wide element
-range). Due to space constraints given by the large number of parameters, some
-parameter labels on the axes may be hidden. In this case, users can zoom in on
-the area of interest and inspect the penalty values for the parameters of
-interest.
-
-```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 full.penmat <- penmat(alasso.fitMG)
-plot(full.penmat)
 ```
 
 The above penalty matrix is the sum of the following three individuals penalty
@@ -244,9 +236,8 @@ This penalty matrix shrinks the small factor loadings of each group to zero.
 Apart from the group loadings, all the remaining entries of the penalty matrix
 are equal to zero.
 
-```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 sparsity.penmat <- penmat(alasso.fitMG, type = "shrink", which = "lambda")
-plot(sparsity.penmat)
 ```
 
 #### Loading invariance
@@ -254,9 +245,8 @@ plot(sparsity.penmat)
 This penalty matrix shrinks the pairwise group differences of the factor
 loadings to zero.
 
-```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE}
 loadinvariance.penmat <- penmat(alasso.fitMG, type = "diff", which = "lambda")
-plot(loadinvariance.penmat)
 ```
 
 #### Intercept invariance
@@ -264,10 +254,14 @@ plot(loadinvariance.penmat)
 This penalty matrix shrinks the pairwise group differences of the intercepts to
 zero.
 
-```{r fig.height=5, fig.width=7, message=FALSE, warning=FALSE}
+```{r fig.height=6, fig.width=8, message=FALSE, warning=FALSE}
 intinvariance.penmat <- penmat(alasso.fitMG, type = "diff", which = "tau")
-plot(intinvariance.penmat)
 ```
+
+
+See ["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/plotting-penalty-matrix.html) for details on how to produce interactive plots of the above penalty matrices.
+
+
 
 ### Factor scores
 

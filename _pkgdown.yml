@@ -37,3 +37,13 @@ reference:
 - title: Data
   contents:
   - ccdata
+
+
+articles:
+- title: Vignettes
+  navbar: ~
+  contents:
+  - automatic-tuning-selection
+  - grid-search-tuning-selection
+  - multiple-group-analysis
+  - articles/plotting-penalty-matrix
