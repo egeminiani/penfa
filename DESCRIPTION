@@ -1,5 +1,5 @@
 Package: penfa
-Title: Single- and Multiple-Group Penalized Factor Analysis
+Title: Single- And Multiple-Group Penalized Factor Analysis
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Elena",

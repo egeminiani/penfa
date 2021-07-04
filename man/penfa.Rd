@@ -557,7 +557,7 @@ alasso_fitMG <- penfa(## factor model
 Geminiani, E., Marra, G., & Moustaki, I. (2021). "Single- and Multiple-Group
 Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated
 Automatic Multiple Tuning Parameter Selection." Psychometrika, 86(1), 65-95.
-\url{https://doi.org/10.1007/s11336-021-09751-8}
+\doi{10.1007/s11336-021-09751-8}
 
 Geminiani E. (2020), "A penalized likelihood-based framework for single and
 multiple-group factor analysis models" (Doctoral dissertation, University of

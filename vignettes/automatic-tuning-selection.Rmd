@@ -59,7 +59,7 @@ summary(ccdata)
 Before fitting the model, we need to write a model syntax describing the
 relationships between the items and the latent factors. To facilitate its
 formulation, the rules for the syntax specification broadly follow the ones
-required by [lavaan](https://cran.r-project.org/web/packages/lavaan/). The
+required by [lavaan](https://CRAN.R-project.org/package=lavaan/). The
 syntax must be enclosed in single quotes `' '`.
 
 ```{r syntax}

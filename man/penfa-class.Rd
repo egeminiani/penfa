@@ -117,8 +117,7 @@ group). See the manual page of \code{fitted,penfa-method} for details.}
 Geminiani, E., Marra, G., & Moustaki, I. (2021). "Single- and
 Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm Approach
 with Integrated Automatic Multiple Tuning Parameter Selection."
-Psychometrika, 86(1), 65-95.
-\url{https://doi.org/10.1007/s11336-021-09751-8}
+Psychometrika, 86(1), 65-95. \doi{10.1007/s11336-021-09751-8}
 }
 \seealso{
 \code{\link{penfa}}, \code{\link{penfaParEstim}}
