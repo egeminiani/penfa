@@ -305,7 +305,7 @@ print(formatC(diag(alasso_penmat), digits = 2, format = "f"), quote = FALSE)
 ```
 
 
-See ["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/plotting-penalty-matrix.html) for details on how to produce an interactive plot of the 
+See ["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html) for details on how to produce an interactive plot of the 
 penalty matrix.
 
 

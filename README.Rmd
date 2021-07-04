@@ -103,7 +103,7 @@ encourages sparsity in the loading matrices and cross-group invariance of
 loadings and intercepts. The automatic multiple tuning parameter procedure is
 employed for finding the optimal tuning parameter vector.
 
-* See ["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/plotting-penalty-matrix.html) for details on how to produce interactive plots of the  
+* See ["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html) for details on how to produce interactive plots of the  
 penalty matrices.
 
 

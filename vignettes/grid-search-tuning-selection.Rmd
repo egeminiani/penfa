@@ -189,7 +189,7 @@ summary(scad.fit)
 ```
 
 The penalty matrix can be inspected and plotted as shown in
-["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/plotting-penalty-matrix.html).
+["plotting-penalty-matrix"](https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html).
 
 #### Implied moments
 

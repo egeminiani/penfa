@@ -205,7 +205,7 @@ summary(alasso_fit)
     parameter vector.
 
 -   See
-    [“plotting-penalty-matrix”](https://egeminiani.github.io/penfa/articles/plotting-penalty-matrix.html)
+    [“plotting-penalty-matrix”](https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html)
     for details on how to produce interactive plots of the  
     penalty matrices.
 
