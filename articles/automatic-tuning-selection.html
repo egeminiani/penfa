@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">penfa</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -252,7 +252,7 @@ pre[class] {
 <p>The <code>summary</code> method details information on the model characteristics, the optimization and penalization procedures as well as the parameter estimates with associated standard errors and confidence intervals. The optimal value of the tuning parameter for this lasso-penalized factor model is 0.014. The <em>Type</em> column distinguishes between the <em>fixed</em> parameters set to specific values for identification, the <em>free</em> parameters that have been estimated through ordinary maximum likelihood, and the penalized (<em>pen</em>) parameters. The standard errors here have been computed as the square root of the inverse of the penalized Fisher information matrix (Geminiani et al., 2021). The last columns report 95% confidence intervals (CI) for the model parameters. Standard errors and CI of the penalized parameters shrunken to zero are not displayed. A different significance level can be specified through the <code>level</code> argument in the <code>summary</code> call.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">lasso.fit</span><span class="op">)</span>
-<span class="co">## penfa 0.0.0.9000 reached convergence</span>
+<span class="co">## penfa 0.1.0 reached convergence</span>
 <span class="co">## </span>
 <span class="co">##   Number of observations                                    767</span>
 <span class="co">##   Number of groups                                            1</span>
@@ -354,7 +354,7 @@ pre[class] {
                     weights <span class="op">=</span> <span class="va">mle.weights</span>,
                     verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">alasso.fit</span>
-<span class="co">## penfa 0.0.0.9000 reached convergence</span>
+<span class="co">## penfa 0.1.0 reached convergence</span>
 <span class="co">## </span>
 <span class="co">##   Number of observations                                    767</span>
 <span class="co">##                                                                </span>
@@ -393,7 +393,7 @@ pre[class] {
 <a href="#summary" class="anchor"></a>Summary</h4>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">alasso.fit</span><span class="op">)</span>
-<span class="co">## penfa 0.0.0.9000 reached convergence</span>
+<span class="co">## penfa 0.1.0 reached convergence</span>
 <span class="co">## </span>
 <span class="co">##   Number of observations                                    767</span>
 <span class="co">##   Number of groups                                            1</span>
@@ -565,7 +565,7 @@ pre[class] {
 <span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span>
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
-<span class="co">## [1] penfa_0.0.0.9000</span>
+<span class="co">## [1] penfa_0.1.0</span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
 <span class="co">##  [1] VineCopula_2.4.2    magic_1.5-9         sfsmisc_1.1-11      VGAM_1.1-5         </span>

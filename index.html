@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">penfa</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
       </span>
     </div>
 
@@ -147,7 +147,7 @@
 <span class="co">#&gt; Effective degrees of freedom: 27.12936</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">alasso_fit</span>
-<span class="co">#&gt; penfa 0.0.0.9000 reached convergence</span>
+<span class="co">#&gt; penfa 0.1.0 reached convergence</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   Number of observations                                    767</span>
 <span class="co">#&gt;                                                                </span>
@@ -166,7 +166,7 @@
 <p><font size="4"><strong>Step 3</strong></font>: inspect the results</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">alasso_fit</span><span class="op">)</span>
-<span class="co">#&gt; penfa 0.0.0.9000 reached convergence</span>
+<span class="co">#&gt; penfa 0.1.0 reached convergence</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   Number of observations                                    767</span>
 <span class="co">#&gt;   Number of groups                                            1</span>
@@ -258,8 +258,7 @@
 <li><p>See <code><a href="articles/automatic-tuning-selection.html">vignette("automatic-tuning-selection")</a></code> for the estimation of a penalized factor model with lasso and alasso penalties. The tuning parameter producing the optimal amount of sparsity in the factor loading matrix is found through the automatic tuning procedure.</p></li>
 <li><p>See <code><a href="articles/grid-search-tuning-selection.html">vignette("grid-search-tuning-selection")</a></code> for the estimation of a penalized factor model with scad and mcp penalties. A grid search is conducted, and the optimal tuning parameter is the one generating the penalized model with the lowest GBIC (Generalized Bayesian Information Criterion).</p></li>
 <li><p>See <code><a href="articles/multiple-group-analysis.html">vignette("multiple-group-analysis")</a></code> for the estimation of a multiple-group penalized factor model with the alasso penalty. This model encourages sparsity in the loading matrices and cross-group invariance of loadings and intercepts. The automatic multiple tuning parameter procedure is employed for finding the optimal tuning parameter vector.</p></li>
-<li><p>See <a href="https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html">“plotting-penalty-matrix”</a> for details on how to produce interactive plots of the<br>
-penalty matrices.</p></li>
+<li><p>See <a href="https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html">“plotting-penalty-matrix”</a> for details on how to produce interactive plots of the penalty matrices.</p></li>
 </ul>
 </div>
 <div id="literature" class="section level3">
@@ -297,7 +296,7 @@ penalty matrices.</p></li>
 <span id="cb7-22"><a href="#cb7-22"></a><span class="co">#&gt; </span></span>
 <span id="cb7-23"><a href="#cb7-23"></a><span class="co">#&gt;   Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa:</span></span>
 <span id="cb7-24"><a href="#cb7-24"></a><span class="co">#&gt;   Single- And Multiple-Group Penalized Factor Analysis. R package</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a><span class="co">#&gt;   version 0.0.0.9000.</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="co">#&gt;   version 0.1.0 .</span></span>
 <span id="cb7-26"><a href="#cb7-26"></a><span class="co">#&gt; </span></span>
 <span id="cb7-27"><a href="#cb7-27"></a><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
 <span id="cb7-28"><a href="#cb7-28"></a><span class="co">#&gt; </span></span>
@@ -305,7 +304,7 @@ penalty matrices.</p></li>
 <span id="cb7-30"><a href="#cb7-30"></a><span class="co">#&gt;     title = {penfa: Single- And Multiple-Group Penalized Factor Analysis},</span></span>
 <span id="cb7-31"><a href="#cb7-31"></a><span class="co">#&gt;     author = {Elena Geminiani and Giampiero Marra and Irini Moustaki},</span></span>
 <span id="cb7-32"><a href="#cb7-32"></a><span class="co">#&gt;     year = {2021},</span></span>
-<span id="cb7-33"><a href="#cb7-33"></a><span class="co">#&gt;     note = {R package version 0.0.0.9000},</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="co">#&gt;     note = {R package version 0.1.0},</span></span>
 <span id="cb7-34"><a href="#cb7-34"></a><span class="co">#&gt;   }</span></span></code></pre></div>
 </div>
 </div>
@@ -346,9 +345,9 @@ penalty matrices.</p></li>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/"><img src="https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg" alt="minimal R version"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
-<li><a href="https://github.com/egeminiani/penfa/commits/main"><img src="https://img.shields.io/badge/last%20change-2021--07--04-brightgreen.svg" alt="Last-changedate"></a></li>
+<li><a href="https://github.com/egeminiani/penfa/commits/main"><img src="https://img.shields.io/badge/last%20change-2021--07--06-brightgreen.svg" alt="Last-changedate"></a></li>
 <li><a href="https://egeminiani.github.io/penfa/"><img src="https://img.shields.io/badge/website-penfa-orange.svg?colorB=E91E63" alt="Website"></a></li>
-<li><a href="https://github.com/egeminiani/penfa/"><img src="https://img.shields.io/badge/GitHub-0.0.0.9000-orange.svg?style=flat-square" alt="GitHub version"></a></li>
+<li><a href="https://github.com/egeminiani/penfa/"><img src="https://img.shields.io/badge/GitHub-0.1.0-orange.svg?style=flat-square" alt="GitHub version"></a></li>
 <li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/licence-GPL--3-blue.svg" alt="Licence"></a></li>
 <li><a href="https://github.com/egeminiani/penfa/actions"><img src="https://github.com/egeminiani/penfa/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
