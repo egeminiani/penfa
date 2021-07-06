@@ -21,8 +21,8 @@ citEntry(
   title    = "penfa: Single- And Multiple-Group Penalized Factor Analysis",
   author   = "Elena Geminiani, Giampiero Marra and Irini Moustaki",
   year     = "2021",
-  note = "R package version 0.0.0.9000",
-  textVersion = paste("Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa: Single- And Multiple-Group Penalized Factor Analysis. R package version 0.0.0.9000.")
+  note = paste("R package version", packageVersion("penfa")),
+  textVersion = paste("Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa: Single- And Multiple-Group Penalized Factor Analysis. R package version", packageVersion("penfa"), ".")
 )
 
 

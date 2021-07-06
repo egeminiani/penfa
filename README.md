@@ -8,10 +8,10 @@
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg)](https://cran.r-project.org/)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2021--07--04-brightgreen.svg)](https://github.com/egeminiani/penfa/commits/main)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2021--07--06-brightgreen.svg)](https://github.com/egeminiani/penfa/commits/main)
 [![Website](https://img.shields.io/badge/website-penfa-orange.svg?colorB=E91E63)](https://egeminiani.github.io/penfa/)
 [![GitHub
-version](https://img.shields.io/badge/GitHub-0.0.0.9000-orange.svg?style=flat-square)](https://github.com/egeminiani/penfa/)
+version](https://img.shields.io/badge/GitHub-0.1.0-orange.svg?style=flat-square)](https://github.com/egeminiani/penfa/)
 [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![R-CMD-check](https://github.com/egeminiani/penfa/workflows/R-CMD-check/badge.svg)](https://github.com/egeminiani/penfa/actions)
 <!-- badges: end -->
@@ -76,7 +76,7 @@ alasso_fit <- penfa(model  = syntax,
 
 ``` r
 alasso_fit
-#> penfa 0.0.0.9000 reached convergence
+#> penfa 0.1.0 reached convergence
 #> 
 #>   Number of observations                                    767
 #>                                                                
@@ -98,7 +98,7 @@ alasso_fit
 
 ``` r
 summary(alasso_fit)
-#> penfa 0.0.0.9000 reached convergence
+#> penfa 0.1.0 reached convergence
 #> 
 #>   Number of observations                                    767
 #>   Number of groups                                            1
@@ -206,8 +206,8 @@ summary(alasso_fit)
 
 -   See
     [“plotting-penalty-matrix”](https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html)
-    for details on how to produce interactive plots of the  
-    penalty matrices.
+    for details on how to produce interactive plots of the penalty
+    matrices.
 
 ### Literature
 
@@ -247,7 +247,7 @@ summary(alasso_fit)
     #> 
     #>   Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa:
     #>   Single- And Multiple-Group Penalized Factor Analysis. R package
-    #>   version 0.0.0.9000.
+    #>   version 0.1.0 .
     #> 
     #> A BibTeX entry for LaTeX users is
     #> 
@@ -255,5 +255,5 @@ summary(alasso_fit)
     #>     title = {penfa: Single- And Multiple-Group Penalized Factor Analysis},
     #>     author = {Elena Geminiani and Giampiero Marra and Irini Moustaki},
     #>     year = {2021},
-    #>     note = {R package version 0.0.0.9000},
+    #>     note = {R package version 0.1.0},
     #>   }
