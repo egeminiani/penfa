@@ -1,5 +1,7 @@
 citHeader("To cite penfa in publications use:")
 
+note <- sprintf("R package version %s", meta$Version)
+
 citEntry(
   entry    = "Article",
   title    = "Single- and Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated Automatic Multiple Tuning Parameter Selection",
@@ -21,8 +23,6 @@ citEntry(
   title    = "penfa: Single- And Multiple-Group Penalized Factor Analysis",
   author   = "Elena Geminiani, Giampiero Marra and Irini Moustaki",
   year     = "2021",
-  note = paste("R package version", packageVersion("penfa")),
-  textVersion = paste("Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa: Single- And Multiple-Group Penalized Factor Analysis. R package version", packageVersion("penfa"), ".")
+  note     = note,
+  textVersion = paste0("Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa: Single- And Multiple-Group Penalized Factor Analysis. ", note, ".")
 )
-
-
