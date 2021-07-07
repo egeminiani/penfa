@@ -264,7 +264,7 @@ BIC(alasso.fit)
 
 
 Similarly, `AIC(alasso.fit)` gives the GIC (Generalized Information Criterion), 
-and`logLik(alasso.fit)` the model log-likelihood (without the penalty term).
+and `logLik(alasso.fit)` the model log-likelihood (without the penalty term).
 
 
 #### Implied moments
