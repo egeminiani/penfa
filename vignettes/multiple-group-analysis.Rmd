@@ -170,9 +170,10 @@ alasso.fitMG
 
 From the `summary` of the fitted object we can notice that the automatic tuning
 procedure required just a couple of iterations to converge. The optimal tuning
-parameters are  `r round(alasso.fitMG@Penalize@tuning$shrink, 3)` for Penalty 1, 
-`r round(alasso.fitMG@Penalize@tuning$diff[1], 3)` for Penalty 2, and 
-`r round(alasso.fitMG@Penalize@tuning$diff[2], 3)` for Penalty 3.
+parameters are `r format(round(alasso.fitMG@Penalize@tuning$shrink, 8), nsmall = 3)` 
+for Penalty 1, `r format(round(alasso.fitMG@Penalize@tuning$diff[1], 8), nsmall = 3)` for
+Penalty 2, and `r format(round(alasso.fitMG@Penalize@tuning$diff[2], 8), nsmall = 3)` 
+for Penalty 3.
 
 ```{r}
 summary(alasso.fitMG)
