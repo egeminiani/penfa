@@ -380,16 +380,18 @@ pre[class] {
 <p>The number of <em>edf</em> of this penalized model is 27.129, which is a fractional number, and is the sum of the contributions from the <em>edf</em> of each parameter.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">alasso.fit</span><span class="op">@</span><span class="va">Inference</span><span class="op">$</span><span class="va">edf.single</span>
-<span class="co">##     help=~h1     help=~h2     help=~h3     help=~h4     help=~h5     help=~h6     help=~h7 </span>
-<span class="co">## 0.9947715501 0.9964627359 0.9948763923 0.9945258788 0.9914179923 0.9889262380 0.9692182373 </span>
-<span class="co">##     help=~v2     help=~v3     help=~v4     help=~v5    voice=~h2    voice=~h3    voice=~h4 </span>
-<span class="co">## 0.0006292259 0.0005203556 0.0001223770 0.0000319953 0.0003120181 0.0001076611 0.2901653639 </span>
-<span class="co">##    voice=~h5    voice=~h6    voice=~h7    voice=~v1    voice=~v2    voice=~v3    voice=~v4 </span>
-<span class="co">## 0.3585496918 0.6371332419 0.9316357847 0.9962322251 0.9963020143 0.9958467402 0.9960609299 </span>
-<span class="co">##    voice=~v5       h1~~h1       h2~~h2       h3~~h3       h4~~h4       h5~~h5       h6~~h6 </span>
-<span class="co">## 0.9955077902 1.0000000000 1.0000000000 1.0000000000 1.0000000000 1.0000000000 1.0000000000 </span>
-<span class="co">##       h7~~h7       v1~~v1       v2~~v2       v3~~v3       v4~~v4       v5~~v5  help~~voice </span>
-<span class="co">## 1.0000000000 1.0000000000 1.0000000000 1.0000000000 1.0000000000 1.0000000000 1.0000000000</span></code></pre></div>
+<span class="co">##     help=~h1     help=~h2     help=~h3     help=~h4     help=~h5     help=~h6 </span>
+<span class="co">## 0.9947715501 0.9964627359 0.9948763923 0.9945258788 0.9914179923 0.9889262380 </span>
+<span class="co">##     help=~h7     help=~v2     help=~v3     help=~v4     help=~v5    voice=~h2 </span>
+<span class="co">## 0.9692182373 0.0006292259 0.0005203556 0.0001223770 0.0000319953 0.0003120181 </span>
+<span class="co">##    voice=~h3    voice=~h4    voice=~h5    voice=~h6    voice=~h7    voice=~v1 </span>
+<span class="co">## 0.0001076611 0.2901653639 0.3585496918 0.6371332419 0.9316357847 0.9962322251 </span>
+<span class="co">##    voice=~v2    voice=~v3    voice=~v4    voice=~v5       h1~~h1       h2~~h2 </span>
+<span class="co">## 0.9963020143 0.9958467402 0.9960609299 0.9955077902 1.0000000000 1.0000000000 </span>
+<span class="co">##       h3~~h3       h4~~h4       h5~~h5       h6~~h6       h7~~h7       v1~~v1 </span>
+<span class="co">## 1.0000000000 1.0000000000 1.0000000000 1.0000000000 1.0000000000 1.0000000000 </span>
+<span class="co">##       v2~~v2       v3~~v3       v4~~v4       v5~~v5  help~~voice </span>
+<span class="co">## 1.0000000000 1.0000000000 1.0000000000 1.0000000000 1.0000000000</span></code></pre></div>
 </div>
 <div id="summary" class="section level4">
 <h4 class="hasAnchor">
@@ -519,16 +521,18 @@ pre[class] {
 <p>The penalty matrix is diagonal with elements quantifying the extent to which each model parameters has been penalized. The values corresponding to the factor loadings are different from zero, as these are the penalized parameters, whereas the values for the unique variances (<code>h1~~h1</code> to <code>v5~~v5</code>) and the factor covariance (<code>help~~voice</code>) are zero, as these elements were not affected by the penalization. The magnitude of the penalization varies depending on the size of the loading to be penalized: small loadings received a considerable penalty, whereas large loadings a little one.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">alasso_penmat</span><span class="op">)</span></code></pre></div>
-<pre><code>##    help=~h1    help=~h2    help=~h3    help=~h4    help=~h5    help=~h6    help=~h7    help=~v2 
-##        5.80        4.47        5.75        3.82        5.47        5.76       12.52   581469.16 
-##    help=~v3    help=~v4    help=~v5   voice=~h2   voice=~h3   voice=~h4   voice=~h5   voice=~h6 
-##   638625.57  2723361.23  9187629.45  1097206.61  2457115.80      908.38      662.82      245.05 
-##   voice=~h7   voice=~v1   voice=~v2   voice=~v3   voice=~v4   voice=~v5      h1~~h1      h2~~h2 
-##       28.77        4.69        4.76        5.09        4.84        5.22        0.00        0.00 
-##      h3~~h3      h4~~h4      h5~~h5      h6~~h6      h7~~h7      v1~~v1      v2~~v2      v3~~v3 
-##        0.00        0.00        0.00        0.00        0.00        0.00        0.00        0.00 
-##      v4~~v4      v5~~v5 help~~voice 
-##        0.00        0.00        0.00</code></pre>
+<pre><code>##    help=~h1    help=~h2    help=~h3    help=~h4    help=~h5    help=~h6 
+##        5.80        4.47        5.75        3.82        5.47        5.76 
+##    help=~h7    help=~v2    help=~v3    help=~v4    help=~v5   voice=~h2 
+##       12.52   581469.16   638625.57  2723361.23  9187629.45  1097206.61 
+##   voice=~h3   voice=~h4   voice=~h5   voice=~h6   voice=~h7   voice=~v1 
+##  2457115.80      908.38      662.82      245.05       28.77        4.69 
+##   voice=~v2   voice=~v3   voice=~v4   voice=~v5      h1~~h1      h2~~h2 
+##        4.76        5.09        4.84        5.22        0.00        0.00 
+##      h3~~h3      h4~~h4      h5~~h5      h6~~h6      h7~~h7      v1~~v1 
+##        0.00        0.00        0.00        0.00        0.00        0.00 
+##      v2~~v2      v3~~v3      v4~~v4      v5~~v5 help~~voice 
+##        0.00        0.00        0.00        0.00        0.00</code></pre>
 <p>See <a href="https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html">“plotting-penalty-matrix”</a> for details on how to produce an interactive plot of the penalty matrix.</p>
 </div>
 <div id="factor-scores" class="section level4">
@@ -571,27 +575,34 @@ pre[class] {
 <span class="co">## [1] penfa_0.1.0</span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
-<span class="co">##  [1] VineCopula_2.4.2    magic_1.5-9         sfsmisc_1.1-11      VGAM_1.1-5         </span>
-<span class="co">##  [5] splines_4.1.0       tmvnsim_1.0-2       distr_2.8.0         stats4_4.1.0       </span>
-<span class="co">##  [9] yaml_2.2.1          numDeriv_2016.8-1.1 pillar_1.6.1        lattice_0.20-44    </span>
-<span class="co">## [13] startupmsg_0.9.6    glue_1.4.2          digest_0.6.27       colorspace_2.0-2   </span>
-<span class="co">## [17] htmltools_0.5.1.1   Matrix_1.3-3        survey_4.0          psych_2.1.6        </span>
-<span class="co">## [21] pcaPP_1.9-74        pkgconfig_2.0.3     ismev_1.42          purrr_0.3.4        </span>
-<span class="co">## [25] GJRM_0.2-4          mvtnorm_1.1-2       scales_1.1.1        copula_1.0-1       </span>
-<span class="co">## [29] tibble_3.1.2        ADGofTest_0.3       gmp_0.6-2           mgcv_1.8-35        </span>
-<span class="co">## [33] generics_0.1.0      ggplot2_3.3.5       ellipsis_0.3.2      cachem_1.0.5       </span>
-<span class="co">## [37] distrEx_2.8.0       Rmpfr_0.8-4         mnormt_2.0.2        survival_3.2-11    </span>
-<span class="co">## [41] magrittr_2.0.1      crayon_1.4.1        memoise_2.0.0       evaluate_0.14      </span>
-<span class="co">## [45] fs_1.5.0            fansi_0.5.0         nlme_3.1-152        MASS_7.3-54        </span>
-<span class="co">## [49] gsl_2.1-6           textshaping_0.3.5   tools_4.1.0         mitools_2.4        </span>
-<span class="co">## [53] lifecycle_1.0.0     pspline_1.0-18      matrixStats_0.59.0  stringr_1.4.0      </span>
-<span class="co">## [57] trust_0.1-8         munsell_0.5.0       stabledist_0.7-1    scam_1.2-11        </span>
-<span class="co">## [61] gamlss.dist_5.3-2   compiler_4.1.0      pkgdown_1.6.1       evd_2.3-3          </span>
-<span class="co">## [65] systemfonts_1.0.2   rlang_0.4.11        grid_4.1.0          trustOptim_0.8.6.2 </span>
-<span class="co">## [69] rmarkdown_2.9       gtable_0.3.0        abind_1.4-5         DBI_1.1.1          </span>
-<span class="co">## [73] R6_2.5.0            knitr_1.33          dplyr_1.0.7         fastmap_1.1.0      </span>
-<span class="co">## [77] utf8_1.2.1          rprojroot_2.0.2     ragg_1.1.3          desc_1.3.0         </span>
-<span class="co">## [81] matrixcalc_1.0-4    stringi_1.6.2       parallel_4.1.0      Rcpp_1.0.6         </span>
+<span class="co">##  [1] VineCopula_2.4.2    magic_1.5-9         sfsmisc_1.1-11     </span>
+<span class="co">##  [4] VGAM_1.1-5          splines_4.1.0       tmvnsim_1.0-2      </span>
+<span class="co">##  [7] distr_2.8.0         stats4_4.1.0        yaml_2.2.1         </span>
+<span class="co">## [10] numDeriv_2016.8-1.1 pillar_1.6.1        lattice_0.20-44    </span>
+<span class="co">## [13] startupmsg_0.9.6    glue_1.4.2          digest_0.6.27      </span>
+<span class="co">## [16] colorspace_2.0-2    htmltools_0.5.1.1   Matrix_1.3-3       </span>
+<span class="co">## [19] survey_4.0          psych_2.1.6         pcaPP_1.9-74       </span>
+<span class="co">## [22] pkgconfig_2.0.3     ismev_1.42          purrr_0.3.4        </span>
+<span class="co">## [25] GJRM_0.2-4          mvtnorm_1.1-2       scales_1.1.1       </span>
+<span class="co">## [28] copula_1.0-1        tibble_3.1.2        ADGofTest_0.3      </span>
+<span class="co">## [31] gmp_0.6-2           mgcv_1.8-35         generics_0.1.0     </span>
+<span class="co">## [34] ggplot2_3.3.5       ellipsis_0.3.2      cachem_1.0.5       </span>
+<span class="co">## [37] distrEx_2.8.0       Rmpfr_0.8-4         mnormt_2.0.2       </span>
+<span class="co">## [40] survival_3.2-11     magrittr_2.0.1      crayon_1.4.1       </span>
+<span class="co">## [43] memoise_2.0.0       evaluate_0.14       fs_1.5.0           </span>
+<span class="co">## [46] fansi_0.5.0         nlme_3.1-152        MASS_7.3-54        </span>
+<span class="co">## [49] gsl_2.1-6           textshaping_0.3.5   tools_4.1.0        </span>
+<span class="co">## [52] mitools_2.4         lifecycle_1.0.0     pspline_1.0-18     </span>
+<span class="co">## [55] matrixStats_0.59.0  stringr_1.4.0       trust_0.1-8        </span>
+<span class="co">## [58] munsell_0.5.0       stabledist_0.7-1    scam_1.2-11        </span>
+<span class="co">## [61] gamlss.dist_5.3-2   compiler_4.1.0      pkgdown_1.6.1      </span>
+<span class="co">## [64] evd_2.3-3           systemfonts_1.0.2   rlang_0.4.11       </span>
+<span class="co">## [67] grid_4.1.0          trustOptim_0.8.6.2  rmarkdown_2.9      </span>
+<span class="co">## [70] gtable_0.3.0        abind_1.4-5         DBI_1.1.1          </span>
+<span class="co">## [73] R6_2.5.0            knitr_1.33          dplyr_1.0.7        </span>
+<span class="co">## [76] fastmap_1.1.0       utf8_1.2.1          rprojroot_2.0.2    </span>
+<span class="co">## [79] ragg_1.1.3          desc_1.3.0          matrixcalc_1.0-4   </span>
+<span class="co">## [82] stringi_1.6.2       parallel_4.1.0      Rcpp_1.0.7         </span>
 <span class="co">## [85] vctrs_0.3.8         tidyselect_1.1.1    xfun_0.24</span></code></pre></div>
 </div>
 <div id="references" class="section level2">
