@@ -40,6 +40,7 @@
 #'
 #' @seealso \code{\link{penfa}}
 #'
+#' @return A matrix with the factor scores from a fitted \code{penfa} model.
 #'
 #'
 #' @references Geminiani E. (2020), "A penalized likelihood-based framework for

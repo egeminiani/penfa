@@ -38,6 +38,10 @@ it prints a header on top of the parameter list with details on the group
 levels and the information matrix used during optimization by the
 trust-region algorithm.}
 }
+\value{
+A dataframe of class \code{penfa.data.frame} with the parameter
+estimates of a \code{penfa} model for each group.
+}
 \description{
 The parameter estimates of the penalized factor analysis model
 in each group.

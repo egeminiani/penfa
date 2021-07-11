@@ -10,6 +10,9 @@
 \item{object}{An object of class \code{penfaData}, found in the \code{Data}
 slot from a \code{penfa} class object.}
 }
+\value{
+An object reporting a short summary of the input data.
+}
 \description{
 An S4 method showing information on the input data, including the number of
 observations. In case of a multiple-group analysis, the sample sizes for each

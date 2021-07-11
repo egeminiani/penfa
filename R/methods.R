@@ -27,7 +27,7 @@
 
 #' Coefficients from a \code{penfa} object
 #'
-#' An S4 method returning the estimates of the model parameters
+#' An S4 method returning the estimates of the model parameters.
 #'
 #' @param object An object of class \code{penfa}, found as a result of a call
 #'   to \code{penfa}.
@@ -37,6 +37,9 @@
 #'   parameters.
 #' @param labels Logical. If \code{TRUE}, parameters are returned with their
 #'   names.
+#'
+#' @return A numeric vector of class \code{penfa.vector} containing the
+#'   estimated model parameters.
 #'
 #' @seealso \code{\link{penfa}}, \code{\link{penfa-class}}
 #'
@@ -87,7 +90,7 @@ setMethod("coef", "penfa",
 #'
 #' @seealso \code{\link{penfa}}, \code{\link{penfa-class}}
 #'
-#'
+#' @return An object reporting a short summary of a fitted \code{penfa} model.
 #'
 #'
 #' @export
@@ -127,6 +130,10 @@ setMethod("show", "penfa",
 #'   are displayed.
 #'
 #' @seealso \code{\link{penfa}}, \code{\link{penfa-class}}
+#'
+#' @return An object reporting a detailed summary of the estimated parameters
+#' for a \code{penfa} model.
+#'
 #'
 #' @examples
 #'
@@ -181,15 +188,18 @@ setMethod("summary", "penfa",
 #' Model-implied moments for a \code{penfa} object
 #'
 #' An S4 method returning the model-implied moments for an object of class
-#' \code{penfa}. For every group, a list with the model-implied  moments is returned:
-#' \code{cov} contains the implied covariance matrix, and \code{mean} the implied
-#' mean vector. If just the covariance matrix is analyzed, only the \code{cov}
-#' argument is returned.
+#' \code{penfa}. For every group, a list with the model-implied  moments is
+#' returned.
 #'
 #' @param object An object of class \code{penfa}, found as a result of a call
 #'   to \code{penfa}.
 #' @param labels Logical. If \code{TRUE}, the model-implied moments are named
 #'   according to the item names used in the model syntax.
+#'
+#' @return  A list of the model-implied moments for each group: \code{cov}
+#'   contains the implied covariance matrix, and \code{mean} the implied mean
+#'   vector. If just the covariance matrix is analyzed, only the \code{cov}
+#'   argument is returned.
 #'
 #' @seealso \code{\link{penfa}}, \code{\link{penfa-class}}
 #'
@@ -237,7 +247,7 @@ setMethod("fitted", "penfa",
 #'
 #' @seealso \code{\link{penfaData-class}}
 #'
-#'
+#' @return An object reporting a short summary of the input data.
 #'
 #' @export
 setMethod("show", "penfaData",
@@ -260,7 +270,8 @@ setMethod("show", "penfaData",
 #'
 #' @seealso \code{\link{penfaPenalty-class}}
 #'
-#'
+#' @return An object reporting a short summary of the penalization process for
+#' a fitted \code{penfa} model.
 #'
 #'
 #' @export
@@ -598,6 +609,9 @@ object_print_penalty <- function(object, nd = 3L, extra = FALSE, header = FALSE)
 #'   it prints a header on top of the parameter list with details on the group
 #'   levels and the information matrix used during optimization by the
 #'   trust-region algorithm.
+#'
+#' @return A dataframe of class \code{penfa.data.frame} with the parameter
+#' estimates of a \code{penfa} model for each group.
 #'
 #' @seealso \code{\link{penfa}}
 #'

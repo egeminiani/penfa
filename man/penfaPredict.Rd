@@ -36,6 +36,9 @@ scores.}
 are assembled in a single data frame of the same dimensions as the original
 data set and with a group column defining the groups.}
 }
+\value{
+A matrix with the factor scores from a fitted \code{penfa} model.
+}
 \description{
 The \code{penfaPredict} function estimates the factor scores
 from a fitted penalized factor model. The factor scores are the estimated

@@ -20,7 +20,6 @@ pre[class] {
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
-options(width = 100)
 ```
 
 ## Introduction
@@ -48,7 +47,7 @@ analysis of these data.
 
 Let us load and inspect `ccdata`.
 
-```{r dataset}
+```{r dataset, R.options = list(width = 100)}
 library(penfa)
 data(ccdata)
 
@@ -209,7 +208,7 @@ round(alasso.fitMG@Inference$edf.single, 3)
 The group-specific implied moments (the covariance matrix and the mean vector)
 can be found via the `fitted` method.
 
-```{r}
+```{r R.options = list(width = 100)}
 implied <- fitted(alasso.fitMG)
 implied
 ```

@@ -787,6 +787,10 @@ penfa <- function(model      = NULL,
     }
   }
 
+  if(opt$debug){
+    opt$verbose <- opt$warn <- TRUE
+  }
+
   ctrl.trust.opt.check <- names(opt$control) %in% c("rinit", "rmax", "iterlim", "fterm", "mterm")
   if(all(ctrl.trust.opt.check)){
     # names ok, check types

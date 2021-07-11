@@ -21,7 +21,6 @@ pre[class] {
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
-options(width = 100)
 ```
 
 ## Introduction
@@ -50,7 +49,7 @@ analysis of these data.
 
 Let us load and inspect `ccdata`.
 
-```{r dataset}
+```{r dataset, R.options = list(width = 100)}
 library(penfa)
 data(ccdata)
 

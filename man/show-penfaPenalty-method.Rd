@@ -10,6 +10,10 @@
 \item{object}{An object of class \code{penfaPenalty}, found in the
 \code{Penalize} slot from an object of \code{penfa} class.}
 }
+\value{
+An object reporting a short summary of the penalization process for
+a fitted \code{penfa} model.
+}
 \description{
 An S4 method showing information on the penalization process, including the
 employed penalty functions and the model matrices they affect. Additionally,

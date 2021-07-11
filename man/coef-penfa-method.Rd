@@ -18,8 +18,12 @@ parameters.}
 \item{labels}{Logical. If \code{TRUE}, parameters are returned with their
 names.}
 }
+\value{
+A numeric vector of class \code{penfa.vector} containing the
+estimated model parameters.
+}
 \description{
-An S4 method returning the estimates of the model parameters
+An S4 method returning the estimates of the model parameters.
 }
 \examples{
 

@@ -12,13 +12,15 @@
 
 #' \code{penfa} Options
 #'
-#' @description Show the default options used by the \code{\link{penfa}}
-#'   function. The options can be changed by passing "name = value" arguments to
+#' @description The default options internally used by the \code{\link{penfa}}
+#'   function. These options can be changed by passing "name = value" arguments to
 #'   the \code{penfa} function call, where they are being added to the "..."
 #'   argument.
 #'
-#' @details This is the full list of options currently accepted by the
-#'   \code{penfa} function, organized in the following sections.
+#' @param opt List of default options. See below for details.
+#'
+#' @details The following section details the full list of options currently
+#'   accepted by the \code{penfa} function.
 #'
 #'   Model features:
 #'
@@ -54,7 +56,7 @@
 #'   expected Fisher information matrix is used as second-order derivatives
 #'   in the trust-region algorithm and for computing the standard errors of the
 #'   model parameters. If \code{"hessian"}, the penalized Hessian matrix
-#'   is used.}
+#'   is used. Default to \code{"fisher"}.}
 #'   \item{\code{control}:}{A list containing control parameters passed to the
 #'   trust-region optimizer. See the manual page of \code{trust} from the
 #'   \code{trust} package for an overview of its control parameters. Default
@@ -106,54 +108,47 @@
 #'  printed out. Default to \code{FALSE}.}
 #'}
 #'
+#' @return A list of default options internally used by the \code{\link{penfa}}
+#'   function.
+#'
 #' @export
 #'
 #'
-#' @examples
-#' penfaOptions()
-#'
-#'
-penfaOptions <- function() {
+penfaOptions <- function(opt = list(
+  # Options for the factor model
+  meanstructure      = FALSE,
+  int.ov.free        = FALSE,
+  int.lv.free        = FALSE,
+  orthogonal         = FALSE,
+  std.lv             = FALSE,
+  auto.fix.first     = FALSE,
+  auto.fix.single    = FALSE,
 
-  opt <- list(
-              # Options for the factor model
-              meanstructure      = FALSE,
-              int.ov.free        = FALSE,
-              int.lv.free        = FALSE,
-              orthogonal         = FALSE,
-              std.lv             = FALSE,
-              auto.fix.first     = FALSE,
-              auto.fix.single    = FALSE,
+  # Option for the data
+  std.ov             = FALSE,
 
-              # Option for the data
-              std.ov             = FALSE,
+  # Estimation & optimization options
+  information        = "fisher",
+  control            = list(),
+  optim.dx.tol       = 100,
 
-              # Estimation & optimization options
-              information        = "fisher",
-              control            = list(),
-              optim.dx.tol       = 100,
+  # Options for penalization
+  a.scad             = 3.7,
+  a.mcp              = 3,
+  a.alasso           = 1,
+  weights            = NULL,
+  cbar               = 1e-08,
 
-              # Options for penalization
-              a.scad             = 3.7,
-              a.mcp              = 3,
-              a.alasso           = 1,
-              weights            = NULL,
-              cbar               = 1e-08,
+  # Options for automatic procedure
+  gamma              = 4,
+  user.start         = FALSE,
+  start.val          = c(),
 
-              # Options for automatic procedure
-              gamma              = 4,
-              user.start         = FALSE,
-              start.val          = c(),
+  # Options for debugging
+  verbose            = TRUE,
+  warn               = TRUE,
+  debug              = FALSE)) {
 
-              # Options for debugging
-              verbose            = TRUE,
-              warn               = TRUE,
-              debug              = FALSE
-  )
-
-  if(opt$debug) {
-    opt$verbose <- opt$warn <- TRUE
-  }
   opt
 }
 

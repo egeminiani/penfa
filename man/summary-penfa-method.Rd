@@ -46,6 +46,10 @@ and shrunken to zero must be treated with caution.}
 \item{extra}{Logical. If \code{TRUE}, additional information on the model
 are displayed.}
 }
+\value{
+An object reporting a detailed summary of the estimated parameters
+for a \code{penfa} model.
+}
 \description{
 An S4 method printing a summary of the model parameter estimates for an
 object of class \code{penfa}.

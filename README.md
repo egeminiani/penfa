@@ -8,7 +8,7 @@
 [![minimal R
 version](https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg)](https://cran.r-project.org/)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![Last-changedate](https://img.shields.io/badge/last%20change-2021--07--07-brightgreen.svg)](https://github.com/egeminiani/penfa/commits/main)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2021--07--11-brightgreen.svg)](https://github.com/egeminiani/penfa/commits/main)
 [![Website](https://img.shields.io/badge/website-penfa-orange.svg?colorB=E91E63)](https://egeminiani.github.io/penfa/)
 [![GitHub
 version](https://img.shields.io/badge/GitHub-0.1.0-orange.svg?style=flat-square)](https://github.com/egeminiani/penfa/)

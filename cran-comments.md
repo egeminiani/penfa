@@ -1,3 +1,14 @@
+## Resubmission
+
+This is a resubmission. I have:
+
+* Expanded the documentation to include all missing Rd-tags, explained 
+  the function results and the structure of the output. 
+
+* Removed the global `options(width=100)` in vignettes and only added the
+  option temporarily to specific R chunks via `R.options = list(width = 100)`.
+
+
 ## Summary
 
 First release of penfa, a package for fitting single- and multiple-group 

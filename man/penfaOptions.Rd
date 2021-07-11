@@ -4,17 +4,30 @@
 \alias{penfaOptions}
 \title{\code{penfa} Options}
 \usage{
-penfaOptions()
+penfaOptions(
+  opt = list(meanstructure = FALSE, int.ov.free = FALSE, int.lv.free = FALSE,
+    orthogonal = FALSE, std.lv = FALSE, auto.fix.first = FALSE, auto.fix.single = FALSE,
+    std.ov = FALSE, information = "fisher", control = list(), optim.dx.tol = 100, a.scad
+    = 3.7, a.mcp = 3, a.alasso = 1, weights = NULL, cbar = 1e-08, gamma = 4, user.start =
+    FALSE, start.val = c(), verbose = TRUE, warn = TRUE, debug = FALSE)
+)
+}
+\arguments{
+\item{opt}{List of default options. See below for details.}
+}
+\value{
+A list of default options internally used by the \code{\link{penfa}}
+function.
 }
 \description{
-Show the default options used by the \code{\link{penfa}}
-function. The options can be changed by passing "name = value" arguments to
+The default options internally used by the \code{\link{penfa}}
+function. These options can be changed by passing "name = value" arguments to
 the \code{penfa} function call, where they are being added to the "..."
 argument.
 }
 \details{
-This is the full list of options currently accepted by the
-\code{penfa} function, organized in the following sections.
+The following section details the full list of options currently
+accepted by the \code{penfa} function.
 
 Model features:
 
@@ -50,7 +63,7 @@ Estimation and optimization:
 expected Fisher information matrix is used as second-order derivatives
 in the trust-region algorithm and for computing the standard errors of the
 model parameters. If \code{"hessian"}, the penalized Hessian matrix
-is used.}
+is used. Default to \code{"fisher"}.}
 \item{\code{control}:}{A list containing control parameters passed to the
 trust-region optimizer. See the manual page of \code{trust} from the
 \code{trust} package for an overview of its control parameters. Default
@@ -99,9 +112,4 @@ during the iterations. Default to \code{TRUE}.}
 \item{\code{debug}:}{Logical. If \code{TRUE}, debugging information is
 printed out. Default to \code{FALSE}.}
 }
-}
-\examples{
-penfaOptions()
-
-
 }

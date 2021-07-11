@@ -10,6 +10,9 @@
 \item{object}{An object of class \code{penfa}, found as a result of a call
 to \code{penfa}.}
 }
+\value{
+An object reporting a short summary of a fitted \code{penfa} model.
+}
 \description{
 An S4 method printing a short summary of the estimation process, including
 the optimization method, the specified penalty functions, the convergence

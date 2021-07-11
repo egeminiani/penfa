@@ -13,12 +13,16 @@ to \code{penfa}.}
 \item{labels}{Logical. If \code{TRUE}, the model-implied moments are named
 according to the item names used in the model syntax.}
 }
+\value{
+A list of the model-implied moments for each group: \code{cov}
+contains the implied covariance matrix, and \code{mean} the implied mean
+vector. If just the covariance matrix is analyzed, only the \code{cov}
+argument is returned.
+}
 \description{
 An S4 method returning the model-implied moments for an object of class
-\code{penfa}. For every group, a list with the model-implied  moments is returned:
-\code{cov} contains the implied covariance matrix, and \code{mean} the implied
-mean vector. If just the covariance matrix is analyzed, only the \code{cov}
-argument is returned.
+\code{penfa}. For every group, a list with the model-implied  moments is
+returned.
 }
 \examples{
 
