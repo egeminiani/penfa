@@ -70,7 +70,7 @@
       <a href="articles/grid-search-tuning-selection.html">Penalized Factor Analysis: grid search</a>
     </li>
     <li>
-      <a href="articles/multiple-group-analysis.html">Penalized Multiple-Group Factor Analysis</a>
+      <a href="articles/articles/multiple-group-analysis.html">Penalized Multiple-Group Factor Analysis</a>
     </li>
     <li>
       <a href="articles/articles/plotting-penalty-matrix.html">Plotting Penalty Matrices</a>
@@ -113,8 +113,11 @@
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
-<p>The development version of penfa can be installed from <a href="https://github.com/">GitHub</a> with:</p>
+<p>You can install the released version of penfa from CRAN with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"penfa"</span><span class="op">)</span></code></pre></div>
+<p>And the development version from <a href="https://github.com/">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"egeminiani/penfa"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -123,15 +126,15 @@
 <a href="#example" class="anchor"></a>Example</h3>
 <p>This is a basic example showing how to fit a <em>PENalized Factor Analysis</em> model with the alasso penalty and the automatic tuning procedure. A shrinkage penalty is applied to the whole factor loading matrix.</p>
 <p>Let’s load the data (see <code><a href="reference/ccdata.html">?ccdata</a></code> for details).</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/egeminiani/penfa">penfa</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">ccdata</span><span class="op">)</span></code></pre></div>
 <p><font size="4"><strong>Step 1</strong></font> : specify the model syntax</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">syntax</span> <span class="op">=</span> <span class="st">'help  =~   h1 + h2 + h3 + h4 + h5 + h6 + h7 + 0*v1 + v2 + v3 + v4 + v5
           voice =~ 0*h1 + h2 + h3 + h4 + h5 + h6 + h7 +   v1 + v2 + v3 + v4 + v5'</span></code></pre></div>
 <p><font size="4"><strong>Step 2</strong></font>: fit the model</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">alasso_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/penfa.html">penfa</a></span><span class="op">(</span>model  <span class="op">=</span> <span class="va">syntax</span>,
                     data   <span class="op">=</span> <span class="va">ccdata</span>,
                     std.lv <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -148,7 +151,7 @@
 <span class="co">#&gt; Trust region iterations: 15 </span>
 <span class="co">#&gt; Factor solution: admissible </span>
 <span class="co">#&gt; Effective degrees of freedom: 27.12936</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">alasso_fit</span>
 <span class="co">#&gt; penfa 0.1.0 reached convergence</span>
 <span class="co">#&gt; </span>
@@ -167,7 +170,7 @@
 <span class="co">#&gt;                                                                </span>
 <span class="co">#&gt; </span></code></pre></div>
 <p><font size="4"><strong>Step 3</strong></font>: inspect the results</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">alasso_fit</span><span class="op">)</span>
 <span class="co">#&gt; penfa 0.1.0 reached convergence</span>
 <span class="co">#&gt; </span>
@@ -254,13 +257,13 @@
 <span class="co">#&gt;     help           fixed       1.000             1.000    1.000</span>
 <span class="co">#&gt;     voice          fixed       1.000             1.000    1.000</span></code></pre></div>
 </div>
-<div id="tutorials" class="section level3">
+<div id="vignettes-and-tutorials" class="section level3">
 <h3 class="hasAnchor">
-<a href="#tutorials" class="anchor"></a>Tutorials</h3>
+<a href="#vignettes-and-tutorials" class="anchor"></a>Vignettes and Tutorials</h3>
 <ul>
 <li><p>See <code><a href="articles/automatic-tuning-selection.html">vignette("automatic-tuning-selection")</a></code> for the estimation of a penalized factor model with lasso and alasso penalties. The tuning parameter producing the optimal amount of sparsity in the factor loading matrix is found through the automatic tuning procedure.</p></li>
 <li><p>See <code><a href="articles/grid-search-tuning-selection.html">vignette("grid-search-tuning-selection")</a></code> for the estimation of a penalized factor model with scad and mcp penalties. A grid search is conducted, and the optimal tuning parameter is the one generating the penalized model with the lowest GBIC (Generalized Bayesian Information Criterion).</p></li>
-<li><p>See <code><a href="articles/multiple-group-analysis.html">vignette("multiple-group-analysis")</a></code> for the estimation of a multiple-group penalized factor model with the alasso penalty. This model encourages sparsity in the loading matrices and cross-group invariance of loadings and intercepts. The automatic multiple tuning parameter procedure is employed for finding the optimal tuning parameter vector.</p></li>
+<li><p>See <a href="https://egeminiani.github.io/penfa/articles/articles/multiple-group-analysis.html">“multiple-group-analysis”</a> for the estimation of a multiple-group penalized factor model with the alasso penalty. This model encourages sparsity in the loading matrices and cross-group invariance of loadings and intercepts. The automatic multiple tuning parameter procedure is employed for finding the optimal tuning parameter vector.</p></li>
 <li><p>See <a href="https://egeminiani.github.io/penfa/articles/articles/plotting-penalty-matrix.html">“plotting-penalty-matrix”</a> for details on how to produce interactive plots of the penalty matrices.</p></li>
 </ul>
 </div>
@@ -275,40 +278,40 @@
 <div id="how-to-cite" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-to-cite" class="anchor"></a>How to cite</h3>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#&gt; </span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="co">#&gt; To cite penfa in publications use:</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="co">#&gt; </span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt;   Geminiani, E., Marra, G., &amp; Moustaki, I. (2021). Single- and</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt;   Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="co">#&gt;   Approach with Integrated Automatic Multiple Tuning Parameter</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;   Selection.  Psychometrika, 86(1), 65-95.</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt;   https://doi.org/10.1007/s11336-021-09751-8</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; </span></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a><span class="co">#&gt; </span></span>
-<span id="cb7-12"><a href="#cb7-12"></a><span class="co">#&gt;   @Article{,</span></span>
-<span id="cb7-13"><a href="#cb7-13"></a><span class="co">#&gt;     title = {Single- and Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated Automatic Multiple Tuning Parameter Selection},</span></span>
-<span id="cb7-14"><a href="#cb7-14"></a><span class="co">#&gt;     author = {Geminiani Elena and Marra Giampiero and Moustaki Irini},</span></span>
-<span id="cb7-15"><a href="#cb7-15"></a><span class="co">#&gt;     journal = {Psychometrika},</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="co">#&gt;     year = {2021},</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a><span class="co">#&gt;     volume = {86},</span></span>
-<span id="cb7-18"><a href="#cb7-18"></a><span class="co">#&gt;     number = {1},</span></span>
-<span id="cb7-19"><a href="#cb7-19"></a><span class="co">#&gt;     pages = {65-95},</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="co">#&gt;     url = {https://doi.org/10.1007/s11336-021-09751-8},</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a><span class="co">#&gt;   }</span></span>
-<span id="cb7-22"><a href="#cb7-22"></a><span class="co">#&gt; </span></span>
-<span id="cb7-23"><a href="#cb7-23"></a><span class="co">#&gt;   Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa:</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a><span class="co">#&gt;   Single- And Multiple-Group Penalized Factor Analysis. R package</span></span>
-<span id="cb7-25"><a href="#cb7-25"></a><span class="co">#&gt;   version 0.1.0.</span></span>
-<span id="cb7-26"><a href="#cb7-26"></a><span class="co">#&gt; </span></span>
-<span id="cb7-27"><a href="#cb7-27"></a><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
-<span id="cb7-28"><a href="#cb7-28"></a><span class="co">#&gt; </span></span>
-<span id="cb7-29"><a href="#cb7-29"></a><span class="co">#&gt;   @Manual{,</span></span>
-<span id="cb7-30"><a href="#cb7-30"></a><span class="co">#&gt;     title = {penfa: Single- And Multiple-Group Penalized Factor Analysis},</span></span>
-<span id="cb7-31"><a href="#cb7-31"></a><span class="co">#&gt;     author = {Elena Geminiani and Giampiero Marra and Irini Moustaki},</span></span>
-<span id="cb7-32"><a href="#cb7-32"></a><span class="co">#&gt;     year = {2021},</span></span>
-<span id="cb7-33"><a href="#cb7-33"></a><span class="co">#&gt;     note = {R package version 0.1.0},</span></span>
-<span id="cb7-34"><a href="#cb7-34"></a><span class="co">#&gt;   }</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt; To cite penfa in publications use:</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt; </span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt;   Geminiani, E., Marra, G., &amp; Moustaki, I. (2021). Single- and</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt;   Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co">#&gt;   Approach with Integrated Automatic Multiple Tuning Parameter</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt;   Selection.  Psychometrika, 86(1), 65-95.</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt;   https://doi.org/10.1007/s11336-021-09751-8</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt; </span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt; </span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;   @Article{,</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt;     title = {Single- and Multiple-Group Penalized Factor Analysis: A Trust-Region Algorithm Approach with Integrated Automatic Multiple Tuning Parameter Selection},</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt;     author = {Geminiani Elena and Marra Giampiero and Moustaki Irini},</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt;     journal = {Psychometrika},</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt;     year = {2021},</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt;     volume = {86},</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="co">#&gt;     number = {1},</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="co">#&gt;     pages = {65-95},</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a><span class="co">#&gt;     url = {https://doi.org/10.1007/s11336-021-09751-8},</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="co">#&gt;   }</span></span>
+<span id="cb8-22"><a href="#cb8-22"></a><span class="co">#&gt; </span></span>
+<span id="cb8-23"><a href="#cb8-23"></a><span class="co">#&gt;   Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa:</span></span>
+<span id="cb8-24"><a href="#cb8-24"></a><span class="co">#&gt;   Single- And Multiple-Group Penalized Factor Analysis. R package</span></span>
+<span id="cb8-25"><a href="#cb8-25"></a><span class="co">#&gt;   version 0.1.0.</span></span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="co">#&gt; </span></span>
+<span id="cb8-27"><a href="#cb8-27"></a><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span id="cb8-28"><a href="#cb8-28"></a><span class="co">#&gt; </span></span>
+<span id="cb8-29"><a href="#cb8-29"></a><span class="co">#&gt;   @Manual{,</span></span>
+<span id="cb8-30"><a href="#cb8-30"></a><span class="co">#&gt;     title = {penfa: Single- And Multiple-Group Penalized Factor Analysis},</span></span>
+<span id="cb8-31"><a href="#cb8-31"></a><span class="co">#&gt;     author = {Elena Geminiani and Giampiero Marra and Irini Moustaki},</span></span>
+<span id="cb8-32"><a href="#cb8-32"></a><span class="co">#&gt;     year = {2021},</span></span>
+<span id="cb8-33"><a href="#cb8-33"></a><span class="co">#&gt;     note = {R package version 0.1.0},</span></span>
+<span id="cb8-34"><a href="#cb8-34"></a><span class="co">#&gt;   }</span></span></code></pre></div>
 </div>
 </div>
   </div>
@@ -317,6 +320,8 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=penfa">https://​cloud.r-project.org/​package=penfa</a>
+</li>
 <li>Browse source code at <br><a href="https://github.com/egeminiani/penfa/">https://​github.com/​egeminiani/​penfa/​</a>
 </li>
 </ul>
@@ -348,10 +353,9 @@
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/"><img src="https://img.shields.io/badge/R%3E%3D-3.5.0-6666ff.svg" alt="minimal R version"></a></li>
 <li><a href="https://lifecycle.r-lib.org/articles/stages.html"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="lifecycle"></a></li>
-<li><a href="https://github.com/egeminiani/penfa/commits/main"><img src="https://img.shields.io/badge/last%20change-2021--07--11-brightgreen.svg" alt="Last-changedate"></a></li>
+<li><a href="https://github.com/egeminiani/penfa/commits/main"><img src="https://img.shields.io/badge/last%20change-2021--07--13-brightgreen.svg" alt="Last-changedate"></a></li>
 <li><a href="https://egeminiani.github.io/penfa/"><img src="https://img.shields.io/badge/website-penfa-orange.svg?colorB=E91E63" alt="Website"></a></li>
-<li><a href="https://github.com/egeminiani/penfa/"><img src="https://img.shields.io/badge/GitHub-0.1.0-orange.svg?style=flat-square" alt="GitHub version"></a></li>
-<li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/licence-GPL--3-blue.svg" alt="Licence"></a></li>
+<li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/licence-GPL--3-orange.svg" alt="Licence"></a></li>
 <li><a href="https://github.com/egeminiani/penfa/actions"><img src="https://github.com/egeminiani/penfa/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
