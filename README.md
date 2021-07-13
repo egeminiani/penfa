@@ -79,7 +79,7 @@ alasso_fit <- penfa(model  = syntax,
 
 ``` r
 alasso_fit
-#> penfa 0.1.0 reached convergence
+#> penfa 0.1.1 reached convergence
 #> 
 #>   Number of observations                                    767
 #>                                                                
@@ -101,7 +101,7 @@ alasso_fit
 
 ``` r
 summary(alasso_fit)
-#> penfa 0.1.0 reached convergence
+#> penfa 0.1.1 reached convergence
 #> 
 #>   Number of observations                                    767
 #>   Number of groups                                            1
@@ -251,7 +251,7 @@ summary(alasso_fit)
     #> 
     #>   Elena Geminiani, Giampiero Marra and Irini Moustaki (2021). penfa:
     #>   Single- And Multiple-Group Penalized Factor Analysis. R package
-    #>   version 0.1.0.
+    #>   version 0.1.1.
     #> 
     #> A BibTeX entry for LaTeX users is
     #> 
@@ -259,5 +259,5 @@ summary(alasso_fit)
     #>     title = {penfa: Single- And Multiple-Group Penalized Factor Analysis},
     #>     author = {Elena Geminiani and Giampiero Marra and Irini Moustaki},
     #>     year = {2021},
-    #>     note = {R package version 0.1.0},
+    #>     note = {R package version 0.1.1},
     #>   }
