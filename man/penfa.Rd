@@ -494,6 +494,12 @@ should take extra caution when using the standard errors associated with the
 penalized parameters that were shrunken to zero. \cr
 }
 
+\section{Vignettes and Tutorials}{
+To learn more about \code{penfa}, start with the vignettes and tutorials at
+\code{browseVignettes(package = "penfa")} and
+\url{https://egeminiani.github.io/penfa/articles/}.
+}
+
 \examples{
 
 data(ccdata)
@@ -550,6 +556,9 @@ alasso_fitMG <- penfa(## factor model
                       gamma = 4,
                       ## alasso
                       weights = mle_weightsMG)
+
+### For additional examples, see the vignettes and tutorials at
+### browseVignettes(package = "penfa") and https://egeminiani.github.io/penfa/articles/
 
 
 }

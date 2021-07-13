@@ -248,9 +248,8 @@ vector. This is clearly not advisable, as it would introduce further
 complications and possibly new computational problems and instabilities. For
 this reason, we suggest users to rely on the automatic tuning parameter
 selection procedure, whose applicability is demonstrated in the
-package vignettes for single (`vignette("automatic-tuning-selection")`) and
-multiple-group (`vignette("multiple-group-analysis")`) penalized
-models.
+vignettes for single (`vignette("automatic-tuning-selection")`) and
+multiple-group (["multiple-group-analysis"](https://egeminiani.github.io/penfa/articles/articles/multiple-group-analysis.html)) penalized models.
 
 
 ## R Session

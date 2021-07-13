@@ -27,7 +27,7 @@ knitr::opts_chunk$set(collapse = TRUE)
 
 **Aim**. This vignette shows how to plot the penalty matrices from the single-
 and multiple-group penalized factor models estimated in 
-`vignette("automatic-tuning-selection")` and `vignette("multiple-group-analysis")`.
+`vignette("automatic-tuning-selection")` and ["multiple-group-analysis"](https://egeminiani.github.io/penfa/articles/articles/multiple-group-analysis.html).
 
 **Data**. For illustration purposes, we use the cross-cultural data set `ccdata`
 containing the standardized ratings to 12 items concerning organizational
@@ -117,7 +117,7 @@ plot(alasso_penmat)
 ## Penalized Multiple-Group Factor Analysis
 
 Let us fit the penalized multiple-group factor model with alasso and automatic 
-multiple tuning procedure as described in `vignette("multiple-group-analysis")`.
+multiple tuning procedure as described in ["multiple-group-analysis"](https://egeminiani.github.io/penfa/articles/articles/multiple-group-analysis.html).
 
 
 ```{r}

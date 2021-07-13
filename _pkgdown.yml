@@ -45,5 +45,5 @@ articles:
   contents:
   - automatic-tuning-selection
   - grid-search-tuning-selection
-  - multiple-group-analysis
+  - articles/multiple-group-analysis
   - articles/plotting-penalty-matrix

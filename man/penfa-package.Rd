@@ -11,7 +11,8 @@ continuous data. The models are estimated via a trust-region algorithm with
 integrated automatic multiple tuning parameter selection. The available
 penalties include lasso, adaptive lasso, scad, mcp, and ridge. \cr\cr
 The main function of the package is \code{\link{penfa}}. To learn more about
-it, start with the package vignettes: browseVignettes(package = "penfa").
+it, start with the vignettes and tutorials at \code{browseVignettes(package = "penfa")} and
+\url{https://egeminiani.github.io/penfa/articles/}.
 }
 \details{
 Penalized factor analysis allows to produce parsimonious models using largely
