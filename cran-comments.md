@@ -1,6 +1,6 @@
 ## Release summary
 
-In this version (v0.1.1), I have fixed the vignette issue causing some binary 
+In this version (v0.1.1), I have fixed the vignette issue causing binary 
 build failures after first CRAN release of penfa v0.1.0.
 
 
@@ -36,5 +36,5 @@ Days since last update: 3
 
 ```
 
-* As requested by CRAN, I am submitting a new version fixing some binary build 
+* As requested by CRAN, I am submitting a new version fixing the binary build 
 failures occurring after first package release to CRAN.
