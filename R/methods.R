@@ -1011,7 +1011,10 @@ plot.penfaPenMat <- function(x, ...,
   # log1p to handle zeroes
   logx <- log1p(abs(x))
   if(is.null(col)){
-    col <- cartography::carto.pal(pal1 = "blue.pal", n1 = 20)
+    col <- c("#DCF0F8", "#D0E8F2", "#C4E0EC", "#B9D8E7", "#ADD0E1", "#A1C8DC", 
+             "#96C0D6", "#8AB8D0", "#7EB0CB", "#6EA6C3", "#5F9BBC", "#4F91B4", 
+             "#4086AD", "#307BA5", "#236F9A", "#1E6085", "#19506F", "#14405A", 
+             "#0F3045", "#0B2130")
   }
 
   p <- plotly::plot_ly(x = rownames(logx),
